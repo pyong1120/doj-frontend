@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - San Pablo City PPO</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+
+  <div class="login-box">
+    <div class="login-header">
+      <img src="ppa.png" alt="PPA Logo" class="login-logo-left" />
+
+      <div class="login-header-text">
+        <div>Republic of the Philippines</div>
+        <div class="bold-line">Department of Justice</div>
+        <div><strong>PAROLE AND PROBATION ADMINISTRATION</strong></div>
+        <div><strong>REGIONAL OFFICE NO. IV-A (CALABARZON)</strong></div>
+        <div class="main-office">SAN PABLO CITY PAROLE PROBATION OFFICE</div>
+        <div class="bold-line">Kagawaran ng Katarungan, Capitol Site, San Pablo City, Laguna</div>
+        <div>(049-561-2224) sanpablocityppo4000@gmail.com</div>
+      </div>
+
+      <img src="OIP.png" alt="Office Logo" class="login-logo-new" />
+      <img src="doj.png" alt="DOJ Logo" class="login-logo-right" />
+    </div>
+
+    <h2>Welcome to San Pablo City Parole and Probation Office</h2>
+
+    <input type="text" id="email" placeholder="Email" autocomplete="username" />
+    <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
+
+    <button type="button" id="loginBtn" onclick="login()">Login</button>
+    <p class="forgot-link" onclick="openForgot()">Forgot Password?</p>
+  </div>
+
+  <!-- FORGOT / RESET MODAL -->
+  <div id="forgotModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>Reset Password</h3>
+
+      <!-- Step 1: Email -->
+      <input type="text" id="otpEmail" placeholder="Enter your email" />
+      <button type="button" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+
+      <!-- Step 2: OTP -->
+      <div id="otpSection" style="display:none; margin-top:10px;">
+        <input type="text" id="otpInput" placeholder="Enter OTP" />
+        <button type="button" id="verifyOtpBtn" onclick="verifyOTP()">Verify OTP</button>
+      </div>
+
+      <!-- Step 3: New Password -->
+      <div id="resetSection" style="display:none; margin-top:10px;">
+        <input type="password" id="newPassword" placeholder="New Password (min 8 characters)" />
+        <input type="password" id="confirmPassword" placeholder="Confirm New Password" />
+        <button type="button" id="resetPasswordBtn" onclick="resetPassword()">Reset Password</button>
+      </div>
+
+      <button type="button" class="close-btn" onclick="closeForgot()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "https://doj-backend-inqm.onrender.com";
+
+    let resetToken = "";
+    let otpVerified = false;
+
+    (function checkExistingLogin() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        // window.location.href = "masterlist.html";
+      }
+    })();
+
+    function setButtonLoading(buttonId, isLoading, loadingText, normalText) {
+      const btn = document.getElementById(buttonId);
+      if (!btn) return;
+      btn.disabled = isLoading;
+      btn.textContent = isLoading ? loadingText : normalText;
+    }
+
+    function openForgot() {
+      document.getElementById("forgotModal").style.display = "flex";
+      resetForgotState(false);
+    }
+
+    function closeForgot() {
+      document.getElementById("forgotModal").style.display = "none";
+      resetForgotState(true);
+    }
+
+    function resetForgotState(clearEmail) {
+      otpVerified = false;
+      resetToken = "";
+
+      if (clearEmail) document.getElementById("otpEmail").value = "";
+      document.getElementById("otpInput").value = "";
+      document.getElementById("newPassword").value = "";
+      document.getElementById("confirmPassword").value = "";
+
+      document.getElementById("otpSection").style.display = "none";
+      document.getElementById("resetSection").style.display = "none";
+    }
+
+    async function safeJson(res) {
+      try {
+        return await res.json();
+      } catch {
+        return {};
+      }
+    }
+
+    async function sendOTP() {
+      const email = document.getElementById("otpEmail").value.trim();
+
+      if (email === "") {
+        alert("Please enter your email.");
+        return;
+      }
+
+      otpVerified = false;
+      resetToken = "";
+      document.getElementById("otpInput").value = "";
+      document.getElementById("newPassword").value = "";
+      document.getElementById("confirmPassword").value = "";
+      document.getElementById("resetSection").style.display = "none";
+
+      try {
+        setButtonLoading("sendOtpBtn", true, "Sending...", "Send OTP");
+
+        const res = await fetch(`${API_BASE}/api/forgot-password`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await safeJson(res);
+
+        if (!res.ok) {
+          alert(data.message || "Failed to send OTP.");
+          return;
+        }
+
+        alert(data.message || "If that email exists, we sent an OTP.");
+        document.getElementById("otpSection").style.display = "block";
+      } catch (err) {
+        console.error("sendOTP error:", err);
+        alert("Cannot connect to server.");
+      } finally {
+        setButtonLoading("sendOtpBtn", false, "Sending...", "Send OTP");
+      }
+    }
+
+    async function verifyOTP() {
+      const email = document.getElementById("otpEmail").value.trim();
+      const otp = document.getElementById("otpInput").value.trim();
+
+      if (email === "") {
+        alert("Please enter your email.");
+        return;
+      }
+
+      if (otp === "") {
+        alert("Enter the OTP.");
+        return;
+      }
+
+      try {
+        setButtonLoading("verifyOtpBtn", true, "Verifying...", "Verify OTP");
+
+        const res = await fetch(`${API_BASE}/api/verify-otp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp })
+        });
+
+        const data = await safeJson(res);
+
+        if (!res.ok) {
+          alert(data.message || "Invalid OTP.");
+          return;
+        }
+
+        resetToken = data.resetToken || "";
+        if (!resetToken) {
+          alert("OTP verified but no reset token received.");
+          return;
+        }
+
+        otpVerified = true;
+        alert("OTP verified. Please set your new password.");
+        document.getElementById("resetSection").style.display = "block";
+      } catch (err) {
+        console.error("verifyOTP error:", err);
+        alert("Server error.");
+      } finally {
+        setButtonLoading("verifyOtpBtn", false, "Verifying...", "Verify OTP");
+      }
+    }
+
+    async function resetPassword() {
+      if (!otpVerified || !resetToken) {
+        alert("Please verify OTP first.");
+        return;
+      }
+
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (newPassword.trim() === "" || confirmPassword.trim() === "") {
+        alert("Please enter and confirm your new password.");
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        alert("Password must be at least 8 characters.");
+        return;
+      }
+
+      try {
+        setButtonLoading("resetPasswordBtn", true, "Resetting...", "Reset Password");
+
+        const res = await fetch(`${API_BASE}/api/reset-password`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ resetToken, newPassword })
+        });
+
+        const data = await safeJson(res);
+
+        if (!res.ok) {
+          alert(data.message || "Password reset failed.");
+          return;
+        }
+
+        alert(data.message || "Password updated successfully.");
+
+        const email = document.getElementById("otpEmail").value.trim();
+        document.getElementById("email").value = email;
+        document.getElementById("password").value = "";
+
+        closeForgot();
+      } catch (err) {
+        console.error("resetPassword error:", err);
+        alert("Cannot connect to server.");
+      } finally {
+        setButtonLoading("resetPasswordBtn", false, "Resetting...", "Reset Password");
+      }
+    }
+
+    async function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (email === "" || password === "") {
+        alert("Both email and password are required.");
+        return;
+      }
+
+      try {
+        setButtonLoading("loginBtn", true, "Logging in...", "Login");
+
+        const res = await fetch(`${API_BASE}/api/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await safeJson(res);
+
+        if (!res.ok) {
+          alert(data.message || "Login failed.");
+          return;
+        }
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userEmail", data.user?.email || email);
+        localStorage.setItem("userId", String(data.user?.id || ""));
+
+        window.location.href = "masterlist.html";
+      } catch (err) {
+        console.error("login error:", err);
+        alert("Cannot connect to backend. Make sure backend is running.");
+      } finally {
+        setButtonLoading("loginBtn", false, "Logging in...", "Login");
+      }
+    }
+
+    document.getElementById("forgotModal").addEventListener("click", function (e) {
+      if (e.target === this) closeForgot();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      const modalOpen = document.getElementById("forgotModal").style.display === "flex";
+
+      if (!modalOpen && e.key === "Enter") {
+        login();
+      }
+    });
+  </script>
+</body>
+</html>
