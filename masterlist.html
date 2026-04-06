@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>San Pablo City Parole and Probation Office</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- UPPER RIGHT LOGOS WRAPPER -->
+  <div class="top-right-logos">
+    <img src="doj.png" alt="Second Logo">
+    <img src="OIP.png" alt="Right Logo">
+  </div>
+
+  <div class="header">
+    <div class="header-top">
+      <img src="ppa.png" alt="Office Logo" class="logo">
+      <div class="header-text">
+        <h1>Republic of the Philippines</h1>
+        <h2>Department of Justice</h2>
+        <h3>PAROLE AND PROBATION ADMINISTRATION</h3>
+        <h4>REGIONAL OFFICE NO. IV-A (CALABARZON)</h4>
+        <h5>SAN PABLO CITY PAROLE & PROBATION OFFICE</h5>
+        <h6>Kagawaran ng Katarungan, Capitol Site, San Pablo City, Laguna</h6>
+        <h7>(049-561-2224) sanpablocityppo4000@gmail.com</h7>
+      </div>
+    </div>
+  </div>
+
+  <!-- MASTERLIST TITLE -->
+  <div class="masterlist-title-box">
+    <div class="masterlist-title">SAN PABLO CITY OFFICE ORDER MASTERLIST</div>
+    <div class="masterlist-divider"></div>
+  </div>
+
+  <div class="year-tabs-bar">
+    <div class="year-controls">
+      <div class="year-select">
+        <select id="yearSelect">
+          <option value="" disabled selected>Select Year</option>
+        </select>
+      </div>
+
+      <label class="archived-toggle">
+        <input type="checkbox" id="showArchivedToggle" />
+        <span>Show Archived</span>
+      </label>
+    </div>
+
+    <div class="search-box">
+      <div class="menu-wrapper">
+        <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+        <div class="menu-dropdown" id="menuDropdown">
+          <div class="menu-item" onclick="logout()">Logout</div>
+        </div>
+      </div>
+
+      <input type="text" id="searchSurname" placeholder="Search by Surname" oninput="filterBySurname()">
+      <button type="button" class="clear-search" onclick="clearSearch()">Clear</button>
+    </div>
+  </div>
+
+  <input type="hidden" id="activeYear" value="">
+
+  <!-- FORM SECTION -->
+  <div class="form-section">
+
+    <div class="section-box investigation-box">
+      <div class="section-box-title">INVESTIGATION</div>
+      <div class="investigation-grid">
+
+        <!-- PI/CPI dropdown + number input -->
+        <div class="combo-field" id="referralCombo" style="grid-column: span 2;">
+          <select id="referralType">
+            <option value="" disabled selected>New Referrals Received</option>
+            <option value="PI">PI</option>
+            <option value="CPI">CPI</option>
+          </select>
+          <input type="text" id="referralNumber" placeholder="PI or CPI No.">
+        </div>
+
+        <!-- CPI-only fields -->
+        <div id="cpiFields" style="display:none; grid-column: span 2;">
+          <label for="requestingOffice" style="display:block; font-size:12px; margin:6px 0 4px;">Requesting Office</label>
+          <input type="text" id="requestingOffice" placeholder="Requesting Office">
+
+          <label for="serviceRequested" style="display:block; font-size:12px; margin:10px 0 4px;">Service Requested</label>
+          <select id="serviceRequested">
+            <option value="" disabled selected>Select Service Requested</option>
+            <option value="Full blown">Full blown</option>
+            <option value="Simple CI">Simple CI</option>
+          </select>
+
+          <label for="dateSubmitted" style="display:block; font-size:12px; margin:10px 0 4px;">Date Submitted</label>
+          <input type="date" id="dateSubmitted">
+        </div>
+
+        <!-- Original input preserved for backend compatibility -->
+        <input type="text" id="referral" placeholder="New Referrals Received">
+        <input type="text" id="petitioner" placeholder="Petitioner's Name">
+        <input type="text" id="address" placeholder="Address">
+        <input type="text" id="ccno" placeholder="CC. No.">
+        <input type="text" id="court" placeholder="Court of Origin">
+        <input type="text" id="offense" placeholder="Offense">
+        <input type="text" id="sentence" placeholder="Sentence">
+        <input type="date" id="dateReceived" class="date-received" data-placeholder="Date Received" required>
+        <input type="date" id="dateOfOrder" class="date-received" data-placeholder="Date of Order" required>
+        <input type="text" id="officer" placeholder="Investigating Officer">
+      </div>
+    </div>
+
+    <div class="section-box psir-box">
+      <div class="section-box-title psir-title">PSIR SUBMITTED</div>
+      <div class="psir-grid">
+        <div class="combo-field" id="psirCombo">
+          <select id="psirType">
+            <option value="">Select</option>
+            <option value="PSIR">PSIR/Grant</option>
+            <option value="Denial">Denial</option>
+            <option value="Withdraw">Withdraw</option>
+            <option value="Cancel">Cancel</option>
+          </select>
+          <input type="date" id="psirSelectedDate" class="psir-date" data-placeholder="Date" required>
+        </div>
+
+        <input type="hidden" id="psirDate" value="">
+        <input type="hidden" id="denialDate" value="">
+        <input type="hidden" id="withdrawDate" value="">
+        <input type="hidden" id="cancelDate" value="">
+      </div>
+    </div>
+
+    <div class="section-box probation-box">
+      <div class="section-box-title probation-title">PROBATION SUPERVISION &amp; PROBATION PERIOD</div>
+      <div class="probation-grid">
+
+        <!-- Docket No combo -->
+        <div class="combo-field" id="docketCombo">
+          <select id="docketType">
+            <option value="" disabled selected>Docket No.</option>
+            <option value="PS">PS</option>
+            <option value="CPS">CPS</option>
+          </select>
+          <input type="text" id="docketNumber" placeholder="PS or CPS No.">
+        </div>
+
+        <!-- CPS-only field -->
+        <div id="cpsFields" style="display:none; grid-column: span 2;">
+          <label for="cpsRequestingOffice" style="display:block; font-size:12px; margin:6px 0 4px;">Requesting Office</label>
+          <input type="text" id="cpsRequestingOffice" placeholder="Requesting Office">
+        </div>
+
+        <input type="text" id="docketNo" placeholder="Docket No.">
+
+        <input type="text" id="classification" placeholder="Classification">
+        <input type="text" id="supervisingOfficer" placeholder="Supervising Officer">
+        <input type="date" id="dateReceivedPPO" class="probation-date probation-date-ppo" data-placeholder="Date Received by the PPO" required>
+        <input type="date" id="probationStarts" class="probation-date probation-date-starts" data-placeholder="Starts" required>
+        <input type="date" id="probationEnds" class="probation-date probation-date-ends" data-placeholder="Ends" required>
+      </div>
+    </div>
+
+    <div class="section-box final-report-box">
+      <div class="section-box-title final-report-title">FINAL REPORT</div>
+      <div class="final-report-grid">
+
+        <div class="combo-field" id="finalTerminationCombo">
+          <select id="finalTerminationType" required>
+            <option value="" disabled selected>Termination Type</option>
+            <option value="Full Term">Full Term</option>
+            <option value="Early Termination">Early Termination</option>
+            <option value="Died">Died</option>
+          </select>
+          <input type="date" id="finalTerminationDate" data-placeholder="Date" required>
+        </div>
+
+        <div class="combo-field combo-field-3" id="finalRevocationCombo">
+          <select id="finalRevocationType" required>
+            <option value="" disabled selected>Revocation Type</option>
+            <option value="Abscond">Abscond</option>
+            <option value="Commission of Another Offense">Commission of Another Offense</option>
+            <option value="Violation of Probation Conditions">Violation of Probation Conditions</option>
+            <option value="Others (Specify)">Others (Specify)</option>
+          </select>
+          <input type="date" id="finalRevocationDate" data-placeholder="Date" required>
+          <input type="text" id="finalRevocationOther" placeholder="Specify..." style="display:none;">
+        </div>
+
+        <input type="date" id="finalExtension" data-placeholder="Extension of Probation Period" required>
+      </div>
+    </div>
+
+    <div class="section-box termination-box">
+      <div class="section-box-title termination-title">TERMINATION</div>
+      <div class="termination-grid">
+
+        <div class="combo-field" id="terminationTypeCombo">
+          <select id="terminationTypeSelect">
+            <option value="" disabled selected>Termination Type</option>
+            <option value="Full Term">Full Term</option>
+            <option value="Denied">Denied</option>
+            <option value="Withdrawn">Withdrawn</option>
+            <option value="Early Termination">Early Termination</option>
+            <option value="Died">Died</option>
+          </select>
+          <input type="date" id="terminationDate" data-placeholder="Date" required>
+        </div>
+
+        <div class="combo-field combo-field-3" id="terminationRevocationCombo">
+          <select id="revocationType" required>
+            <option value="" disabled selected>Revocation type</option>
+            <option value="Abscond">Abscond</option>
+            <option value="Commission of Another Offense">Commission of Another Offense</option>
+            <option value="Violation of Probation Conditions">Violation of Probation Conditions</option>
+            <option value="Others (Specify)">Others (Specify)</option>
+          </select>
+
+          <input type="date" id="revocationDate" data-placeholder="Date" required>
+          <input type="text" id="revocationTypeOther" placeholder="Specify..." style="display:none;">
+        </div>
+
+        <input type="date" id="extensionProbationPeriod" data-placeholder="Extension of Probation Period" required>
+
+        <div class="combo-field" id="terminationTransferCombo">
+          <input type="text" id="terminationTransfer" placeholder="Transfer to Other Courts/PPOS">
+          <input type="date" id="terminationTransferDate" data-placeholder="Date" required>
+        </div>
+
+      </div>
+    </div>
+
+    <button type="button" class="add-record-btn" onclick="confirmAddRecord()">Add Record</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="dataTable">
+      <thead>
+      <tr>
+        <th colspan="11" class="group-row">INVESTIGATION</th>
+        <th colspan="4" class="psir-date-row">PSIR DATE SUBMITTED TO COURT</th>
+        <th colspan="4" class="probation-row">PROBATION SUPERVISION</th>
+        <th colspan="2" class="probation-period-row">PROBATION PERIOD</th>
+        <th colspan="3" class="final-report-row">FINAL REPORT</th>
+        <th colspan="4" class="termination-row">TERMINATION</th>
+        <th rowspan="2" class="actions-col">ACTIONS</th>
+        <th style="display:none;">ACTIONS</th>
+      </tr>
+
+      <tr>
+        <th>No.</th>
+        <th>New Referrals Received</th>
+        <th>Petitioner's Name</th>
+        <th>Address</th>
+        <th>CC. No.</th>
+        <th>Court of Origin</th>
+        <th>Offense</th>
+        <th>Sentence</th>
+        <th>Date Received</th>
+        <th>Date of Order</th>
+        <th>Investigating Officer</th>
+
+        <th>PSIR/Grant</th>
+        <th>Denial</th>
+        <th>Withdraw</th>
+        <th>Cancel</th>
+
+        <th>Docket No.</th>
+        <th>Classification</th>
+        <th>Supervising Officer</th>
+        <th>Date Received by the PPO</th>
+
+        <th>Starts</th>
+        <th>Ends</th>
+
+        <th>Termination</th>
+        <th>Revocation</th>
+        <th>Extension of Probation Period</th>
+
+        <th>Termination</th>
+        <th>Revocation</th>
+        <th>Extension of Probation Period</th>
+        <th>Transfer to Other Courts/PPOS/Date</th>
+
+        <th style="display:none;">Actions</th>
+      </tr>
+      </thead>
+
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <img src="logoleftlower.png" alt="Lower Left Logo" class="bottom-left-logo">
+
+  <div class="bottom-right-wrapper">
+    <img src="ISO 9001 LOGO - 2025.png" alt="Lower Right Logo" class="bottom-right-logo">
+    <div class="iso-text"> ISO 9001:2015<br>
+      Certificate No.: PHP QMS 25 93 0254 - 20
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ================================
+   AUTH CHECK
+   ================================ */
+const token = localStorage.getItem("token");
+if (!token) {
+  alert("You must login first.");
+  window.location.href = "login.html";
+}
+
+const API_BASE = "https://doj-backend-inqm.onrender.com";
+
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+
+async function confirmAddRecord() {
+  const ok = confirm("Are you sure you want to save?");
+  if (!ok) return;
+
+  try {
+    await addRecord();
+  } catch (err) {
+    console.error(err);
+    alert("Save failed. Check console (F12).");
+  }
+}
+
+function toggleMenu() {
+  const menu = document.getElementById("menuDropdown");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+document.addEventListener("click", function(event) {
+  const menu = document.getElementById("menuDropdown");
+  const button = document.querySelector(".menu-btn");
+  if (!button.contains(event.target) && !menu.contains(event.target)) {
+    menu.style.display = "none";
+  }
+});
+
+function getActiveYear() {
+  return document.getElementById("activeYear").value;
+}
+
+/* =====================================================
+   CACHE / HELPERS
+   ===================================================== */
+let recordsCache = new Map();
+
+function getRecordId(r) {
+  const id = r?.id ?? r?._id ?? r?.record_id ?? r?.recordId;
+  return id != null ? String(id) : "";
+}
+
+function escapeHtml(str = "") {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function pick(r, snake, camel) {
+  if (!r) return "";
+  return r[snake] ?? r[camel] ?? "";
+}
+
+/* =====================================================
+   DATE HELPERS
+   ===================================================== */
+function formatDate(value) {
+  if (!value) return "";
+
+  const s = String(value).trim();
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+
+  if (s.includes("T")) {
+    const d = new Date(s);
+    if (isNaN(d)) return "";
+
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  const d = new Date(s);
+  if (isNaN(d)) return "";
+
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function toNoonUTCDate(value) {
+  const d = formatDate(value);
+  if (!d) return "";
+  return `${d}T12:00:00.000Z`;
+}
+
+/* =====================================================
+   SORT MASTERLIST BY NEW REFERRALS RECEIVED NUMBER
+   - does NOT depend on date_received
+   - finds the first number anywhere in the referral text
+   - examples:
+     "PI 61" -> 61
+     "CPI 7" -> 7
+     "61" -> 61
+     "CPI No. 12 - Requesting Office: ..." -> 12
+   ===================================================== */
+function extractReferralSortValue(referralValue) {
+  const raw = String(referralValue || "").trim();
+  const upper = raw.toUpperCase();
+
+  if (!raw) {
+    return {
+      hasNumber: false,
+      typeOrder: 99,
+      number: Number.MAX_SAFE_INTEGER,
+      text: ""
+    };
+  }
+
+  const typeMatch = upper.match(/\b(PI|CPI)\b/);
+  const numberMatch = raw.match(/(\d+)/);
+
+  return {
+    hasNumber: !!numberMatch,
+    typeOrder: typeMatch ? (typeMatch[1] === "PI" ? 0 : 1) : 2,
+    number: numberMatch ? Number(numberMatch[1]) : Number.MAX_SAFE_INTEGER,
+    text: raw.toLowerCase()
+  };
+}
+
+function sortRecordsByReferral(records) {
+  return [...records].sort((a, b) => {
+    const referralA = pick(a, "referral", "referral");
+    const referralB = pick(b, "referral", "referral");
+
+    const aVal = extractReferralSortValue(referralA);
+    const bVal = extractReferralSortValue(referralB);
+
+    if (aVal.hasNumber !== bVal.hasNumber) {
+      return aVal.hasNumber ? -1 : 1;
+    }
+
+    if (aVal.number !== bVal.number) {
+      return aVal.number - bVal.number;
+    }
+
+    if (aVal.typeOrder !== bVal.typeOrder) {
+      return aVal.typeOrder - bVal.typeOrder;
+    }
+
+    const textCompare = aVal.text.localeCompare(bVal.text, undefined, {
+      numeric: true,
+      sensitivity: "base"
+    });
+    if (textCompare !== 0) return textCompare;
+
+    const petitionerA = String(pick(a, "petitioner", "petitioner") || "");
+    const petitionerB = String(pick(b, "petitioner", "petitioner") || "");
+    return petitionerA.localeCompare(petitionerB, undefined, {
+      sensitivity: "base"
+    });
+  });
+}
+
+/* =====================================================
+   LOAD RECORDS
+   ===================================================== */
+async function loadYearData(year) {
+  const showArchived = document.getElementById("showArchivedToggle")?.checked ? "1" : "0";
+
+  const res = await fetch(`${API_BASE}/api/records/${year}?includeArchived=${showArchived}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    throw new Error(`Failed to load records (${res.status}): ${msg}`);
+  }
+
+  const records = await res.json();
+  return sortRecordsByReferral(records);
+}
+
+/* =====================================================
+   RENDER TABLE
+   ===================================================== */
+async function renderTableForYear(year) {
+  const tbody = document.querySelector("#dataTable tbody");
+  tbody.innerHTML = "";
+  recordsCache.clear();
+
+  const records = await loadYearData(year);
+
+  for (const r of records) {
+    const id = getRecordId(r);
+    if (!id) {
+      console.warn("Skipping record with NO id:", r);
+      continue;
+    }
+
+    recordsCache.set(id, r);
+
+    const archived = !!pick(r, "archived", "archived");
+
+    const row = tbody.insertRow();
+    row.dataset.id = id;
+    row.dataset.archived = archived ? "1" : "0";
+    if (archived) row.style.opacity = "0.6";
+
+    row.innerHTML = `
+      <td></td>
+
+      <td>${escapeHtml(pick(r, "referral", "referral"))}</td>
+      <td>${escapeHtml(pick(r, "petitioner", "petitioner"))}</td>
+      <td>${escapeHtml(pick(r, "address", "address"))}</td>
+      <td>${escapeHtml(pick(r, "ccno", "ccno"))}</td>
+      <td>${escapeHtml(pick(r, "court", "court"))}</td>
+      <td>${escapeHtml(pick(r, "offense", "offense"))}</td>
+      <td>${escapeHtml(pick(r, "sentence", "sentence"))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "date_received", "dateReceived")))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "date_of_order", "dateOfOrder")))}</td>
+      <td>${escapeHtml(pick(r, "officer", "officer"))}</td>
+
+      <td>${escapeHtml(formatDate(pick(r, "psir_date", "psirDate")))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "denial_date", "denialDate")))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "withdraw_date", "withdrawDate")))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "cancel_date", "cancelDate")))}</td>
+
+      <td>${escapeHtml(pick(r, "docket_no", "docketNo"))}</td>
+      <td>${escapeHtml(pick(r, "classification", "classification"))}</td>
+      <td>${escapeHtml(pick(r, "supervising_officer", "supervisingOfficer"))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "date_received_ppo", "dateReceivedPPO")))}</td>
+
+      <td>${escapeHtml(formatDate(pick(r, "probation_starts", "probationStarts")))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "probation_ends", "probationEnds")))}</td>
+
+      <td>${escapeHtml(pick(r, "final_termination", "finalTermination"))}</td>
+      <td>${escapeHtml(pick(r, "final_revocation", "finalRevocation"))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "final_extension", "finalExtension")))}</td>
+
+      <td>${escapeHtml(pick(r, "termination_type", "terminationType"))}</td>
+      <td>${escapeHtml(pick(r, "termination_revocation", "terminationRevocation"))}</td>
+      <td>${escapeHtml(formatDate(pick(r, "extension_probation_period", "extensionProbationPeriod")))}</td>
+      <td>${escapeHtml(pick(r, "termination_transfer_combined", "terminationTransferCombined"))}</td>
+
+      <td>
+        <button type="button" onclick="startEditRow('${escapeHtml(id)}')">Edit</button>
+        <button type="button" onclick="confirmDeleteRecord('${escapeHtml(id)}')" style="margin-left:6px;">Delete</button>
+        <button type="button" onclick="toggleArchiveRecord('${escapeHtml(id)}')" style="margin-left:6px;">
+          ${archived ? "Unarchive" : "Archive"}
+        </button>
+      </td>
+    `;
+  }
+
+  filterBySurname();
+  updateNumbers();
+}
+
+/* =====================================================
+   YEAR DROPDOWN
+   ===================================================== */
+function initUnlimitedYearDropdown() {
+  const yearSelect = document.getElementById("yearSelect");
+  const activeYearInput = document.getElementById("activeYear");
+
+  function generateYearOptions() {
+    const currentYear = new Date().getFullYear();
+    const startYear = 1990;
+    const endYear = currentYear + 20;
+
+    for (let y = endYear; y >= startYear; y--) {
+      const option = document.createElement("option");
+      option.value = String(y);
+      option.textContent = String(y);
+      yearSelect.appendChild(option);
+    }
+
+    const customOption = document.createElement("option");
+    customOption.value = "custom";
+    customOption.textContent = "Other Year...";
+    yearSelect.appendChild(customOption);
+  }
+
+  function setActiveYear(year) {
+    activeYearInput.value = year;
+    localStorage.setItem("last_selected_year", year);
+    renderTableForYear(year).catch(err => {
+      console.error(err);
+      alert(err.message || "Failed to load year data.");
+    });
+  }
+
+  function addCustomYear(year) {
+    year = String(year).trim();
+
+    if (!/^\d{4}$/.test(year)) {
+      alert("Invalid year. Please enter a 4-digit year (Example: 2035).");
+      yearSelect.value = "";
+      return;
+    }
+
+    if (![...yearSelect.options].some(o => o.value === year)) {
+      const newOption = document.createElement("option");
+      newOption.value = year;
+      newOption.textContent = year;
+      yearSelect.insertBefore(newOption, yearSelect.lastElementChild);
+    }
+
+    yearSelect.value = year;
+    setActiveYear(year);
+  }
+
+  yearSelect.addEventListener("change", function() {
+    if (this.value === "custom") {
+      const customYear = prompt("Enter Year (Example: 2035):");
+      if (customYear === null) {
+        yearSelect.value = "";
+        return;
+      }
+      addCustomYear(customYear);
+      return;
+    }
+
+    if (!this.value) return;
+    setActiveYear(this.value);
+  });
+
+  generateYearOptions();
+
+  const lastYear = localStorage.getItem("last_selected_year");
+  if (lastYear) {
+    if (![...yearSelect.options].some(o => o.value === lastYear)) {
+      const newOption = document.createElement("option");
+      newOption.value = lastYear;
+      newOption.textContent = lastYear;
+      yearSelect.insertBefore(newOption, yearSelect.lastElementChild);
+    }
+    yearSelect.value = lastYear;
+    setActiveYear(lastYear);
+  }
+}
+
+/* =====================================================
+   SEARCH / NUMBERING
+   ===================================================== */
+function getSurname(fullName) {
+  if (!fullName) return "";
+  const name = fullName.trim();
+
+  if (name.includes(",")) return name.split(",")[0].trim().toLowerCase();
+
+  const parts = name.split(/\s+/).filter(Boolean);
+  return (parts.length ? parts[parts.length - 1] : "").toLowerCase();
+}
+
+function updateNumbers() {
+  const rows = document.querySelectorAll("#dataTable tbody tr");
+  let n = 0;
+  for (const row of rows) {
+    if (row.style.display === "none") continue;
+    n++;
+    row.cells[0].textContent = n;
+  }
+}
+
+function filterBySurname() {
+  const query = document.getElementById("searchSurname").value.trim().toLowerCase();
+  const tbody = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+  const rows = tbody.getElementsByTagName("tr");
+
+  for (let i = 0; i < rows.length; i++) {
+    const petitionerCell = rows[i].cells[2];
+    const petitionerName = petitionerCell ? petitionerCell.textContent.trim() : "";
+    const surname = getSurname(petitionerName);
+
+    const match = query === "" ? true : surname.includes(query);
+    rows[i].style.display = match ? "" : "none";
+  }
+  updateNumbers();
+}
+
+function clearSearch() {
+  document.getElementById("searchSurname").value = "";
+  filterBySurname();
+  updateNumbers();
+}
+
+/* =====================================================
+   PSIR
+   ===================================================== */
+(function initPsirDropdown() {
+  const typeEl = document.getElementById("psirType");
+  const dateEl = document.getElementById("psirSelectedDate");
+
+  if (!typeEl || !dateEl) return;
+
+  function assignDate() {
+    const type = typeEl.value;
+    const date = dateEl.value;
+
+    document.getElementById("psirDate").value = "";
+    document.getElementById("denialDate").value = "";
+    document.getElementById("withdrawDate").value = "";
+    document.getElementById("cancelDate").value = "";
+
+    if (!type || !date) return;
+
+    if (type === "PSIR") document.getElementById("psirDate").value = date;
+    if (type === "Denial") document.getElementById("denialDate").value = date;
+    if (type === "Withdraw") document.getElementById("withdrawDate").value = date;
+    if (type === "Cancel") document.getElementById("cancelDate").value = date;
+  }
+
+  typeEl.addEventListener("change", assignDate);
+  dateEl.addEventListener("change", assignDate);
+})();
+
+/* =====================================================
+   TERMINATION REVOCATION
+   ===================================================== */
+(function initTerminationRevocationCombo() {
+  const typeEl = document.getElementById("revocationType");
+  const otherEl = document.getElementById("revocationTypeOther");
+  if (!typeEl || !otherEl) return;
+
+  function syncUI() {
+    if (typeEl.value === "Others (Specify)") {
+      otherEl.style.display = "block";
+      otherEl.required = true;
+      otherEl.focus();
+    } else {
+      otherEl.style.display = "none";
+      otherEl.required = false;
+      otherEl.value = "";
+    }
+  }
+
+  typeEl.addEventListener("change", syncUI);
+  syncUI();
+})();
+
+/* =====================================================
+   FINAL REVOCATION
+   ===================================================== */
+(function initFinalRevocationCombo() {
+  const typeEl = document.getElementById("finalRevocationType");
+  const otherEl = document.getElementById("finalRevocationOther");
+  if (!typeEl || !otherEl) return;
+
+  function syncUI() {
+    if (typeEl.value === "Others (Specify)") {
+      otherEl.style.display = "block";
+      otherEl.required = true;
+      otherEl.focus();
+    } else {
+      otherEl.style.display = "none";
+      otherEl.required = false;
+      otherEl.value = "";
+    }
+  }
+
+  typeEl.addEventListener("change", syncUI);
+  syncUI();
+})();
+
+/* =====================================================
+   REFERRAL COMBO
+   ===================================================== */
+(function initReferralCombo() {
+  const oldReferralEl = document.getElementById("referral");
+  const typeEl = document.getElementById("referralType");
+  const numEl = document.getElementById("referralNumber");
+
+  const cpiWrap = document.getElementById("cpiFields");
+  const requestingOfficeEl = document.getElementById("requestingOffice");
+  const serviceRequestedEl = document.getElementById("serviceRequested");
+  const dateSubmittedEl = document.getElementById("dateSubmitted");
+
+  if (!oldReferralEl || !typeEl || !numEl) return;
+
+  oldReferralEl.style.display = "none";
+
+  function syncOldReferralValue() {
+    const type = (typeEl.value || "").trim();
+    const num = (numEl.value || "").trim();
+
+    let combined = [type, num].filter(Boolean).join(" ").trim();
+
+    if (type === "CPI") {
+      const ro = (requestingOfficeEl?.value || "").trim();
+      const sr = (serviceRequestedEl?.value || "").trim();
+      const ds = (dateSubmittedEl?.value || "").trim();
+
+      const extras = [];
+      if (ro) extras.push(`Requesting Office: ${ro}`);
+      if (sr) extras.push(`Service Requested: ${sr}`);
+      if (ds) extras.push(`Date Submitted: ${ds}`);
+
+      if (extras.length) combined = `${combined} - ${extras.join(" - ")}`.trim();
+    }
+
+    oldReferralEl.value = combined;
+  }
+
+  function toggleCpiFields() {
+    const isCpi = typeEl.value === "CPI";
+    if (cpiWrap) cpiWrap.style.display = isCpi ? "block" : "none";
+
+    if (!isCpi) {
+      if (requestingOfficeEl) requestingOfficeEl.value = "";
+      if (serviceRequestedEl) serviceRequestedEl.selectedIndex = 0;
+      if (dateSubmittedEl) dateSubmittedEl.value = "";
+    }
+    syncOldReferralValue();
+  }
+
+  typeEl.addEventListener("change", toggleCpiFields);
+  numEl.addEventListener("input", syncOldReferralValue);
+
+  if (requestingOfficeEl) requestingOfficeEl.addEventListener("input", syncOldReferralValue);
+  if (serviceRequestedEl) serviceRequestedEl.addEventListener("change", syncOldReferralValue);
+  if (dateSubmittedEl) dateSubmittedEl.addEventListener("change", syncOldReferralValue);
+
+  toggleCpiFields();
+  syncOldReferralValue();
+})();
+
+/* =====================================================
+   DOCKET COMBO
+   ===================================================== */
+(function initDocketCombo() {
+  const oldDocketEl = document.getElementById("docketNo");
+  const typeEl = document.getElementById("docketType");
+  const numEl = document.getElementById("docketNumber");
+
+  const cpsWrap = document.getElementById("cpsFields");
+  const cpsRequestingOfficeEl = document.getElementById("cpsRequestingOffice");
+  const terminationTypeSelect = document.getElementById("terminationTypeSelect");
+
+  if (!oldDocketEl || !typeEl || !numEl) return;
+
+  oldDocketEl.style.display = "none";
+
+  function ensureOption(selectEl, value, label) {
+    if (!selectEl) return;
+    const exists = [...selectEl.options].some(o => o.value === value);
+    if (!exists) {
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = label ?? value;
+      selectEl.appendChild(opt);
+    }
+  }
+
+  function syncOldDocketValue() {
+    const type = (typeEl.value || "").trim();
+    const num = (numEl.value || "").trim();
+    let combined = [type, num].filter(Boolean).join(" ").trim();
+
+    if (type === "CPS") {
+      const ro = (cpsRequestingOfficeEl?.value || "").trim();
+      if (ro) combined = `${combined} - Requesting Office: ${ro}`.trim();
+    }
+
+    oldDocketEl.value = combined;
+  }
+
+  function toggleCpsFields() {
+    const isCps = typeEl.value === "CPS";
+
+    if (cpsWrap) cpsWrap.style.display = isCps ? "block" : "none";
+    if (!isCps && cpsRequestingOfficeEl) cpsRequestingOfficeEl.value = "";
+
+    if (terminationTypeSelect) {
+      if (isCps) {
+        ensureOption(terminationTypeSelect, "Terminated", "Terminated");
+        terminationTypeSelect.value = "Terminated";
+        terminationTypeSelect.disabled = true;
+      } else {
+        terminationTypeSelect.disabled = false;
+        terminationTypeSelect.selectedIndex = 0;
+      }
+    }
+
+    syncOldDocketValue();
+  }
+
+  typeEl.addEventListener("change", toggleCpsFields);
+  numEl.addEventListener("input", syncOldDocketValue);
+  if (cpsRequestingOfficeEl) cpsRequestingOfficeEl.addEventListener("input", syncOldDocketValue);
+
+  toggleCpsFields();
+  syncOldDocketValue();
+})();
+
+/* =====================================================
+   ADD RECORD
+   ===================================================== */
+async function addRecord() {
+  const activeYear = getActiveYear();
+  if (!activeYear) {
+    alert("Please select a year first.");
+    return;
+  }
+
+  const referral = document.getElementById("referral").value;
+  const petitioner = document.getElementById("petitioner").value;
+  const address = document.getElementById("address").value;
+  const ccno = document.getElementById("ccno").value;
+  const court = document.getElementById("court").value;
+  const offense = document.getElementById("offense").value;
+  const sentence = document.getElementById("sentence").value;
+
+  const dateReceived = document.getElementById("dateReceived").value;
+  const dateOfOrder = document.getElementById("dateOfOrder").value;
+  const officer = document.getElementById("officer").value;
+
+  const psirDate = document.getElementById("psirDate").value;
+  const denialDate = document.getElementById("denialDate").value;
+  const withdrawDate = document.getElementById("withdrawDate").value;
+  const cancelDate = document.getElementById("cancelDate").value;
+
+  const docketNo = document.getElementById("docketNo").value;
+  const classification = document.getElementById("classification").value;
+  const supervisingOfficer = document.getElementById("supervisingOfficer").value;
+  const dateReceivedPPO = document.getElementById("dateReceivedPPO").value;
+
+  const probationStarts = document.getElementById("probationStarts").value;
+  const probationEnds = document.getElementById("probationEnds").value;
+
+  const finalTerminationType = document.getElementById("finalTerminationType").value;
+  const finalTerminationDate = document.getElementById("finalTerminationDate").value;
+  let finalTermination = "";
+  if (finalTerminationType && finalTerminationDate) finalTermination = `${finalTerminationType} - ${finalTerminationDate}`;
+  else if (finalTerminationType) finalTermination = finalTerminationType;
+  else if (finalTerminationDate) finalTermination = finalTerminationDate;
+
+  const finalRevocationType = document.getElementById("finalRevocationType").value;
+  const finalRevocationDate = document.getElementById("finalRevocationDate").value;
+  const finalRevocationOther = document.getElementById("finalRevocationOther").value.trim();
+  let finalRevocation = "";
+
+  if (finalRevocationType === "Others (Specify)" && finalRevocationOther) {
+    finalRevocation = `${finalRevocationOther} - ${finalRevocationDate}`;
+  } else if (finalRevocationType && finalRevocationDate) {
+    finalRevocation = `${finalRevocationType} - ${finalRevocationDate}`;
+  } else if (finalRevocationType) {
+    finalRevocation = finalRevocationType;
+  } else if (finalRevocationDate) {
+    finalRevocation = finalRevocationDate;
+  }
+
+  const finalExtension = document.getElementById("finalExtension").value;
+
+  const terminationTypeSelect = document.getElementById("terminationTypeSelect").value;
+  const terminationDate = document.getElementById("terminationDate").value;
+  let terminationType = "";
+  if (terminationTypeSelect && terminationDate) terminationType = `${terminationTypeSelect} - ${terminationDate}`;
+  else if (terminationTypeSelect) terminationType = terminationTypeSelect;
+  else if (terminationDate) terminationType = terminationDate;
+
+  let revocationType = document.getElementById("revocationType").value;
+  const revocationDate = document.getElementById("revocationDate").value;
+  const revocationTypeOther = document.getElementById("revocationTypeOther").value.trim();
+  if (revocationType === "Others (Specify)" && revocationTypeOther) revocationType = revocationTypeOther;
+
+  if (document.getElementById("revocationType").value === "Others (Specify)" && revocationTypeOther === "") {
+    alert("Please specify the Termination Revocation type.");
+    return;
+  }
+
+  let terminationRevocation = "";
+  if (revocationType && revocationDate) terminationRevocation = `${revocationType} - ${revocationDate}`;
+  else if (revocationType) terminationRevocation = revocationType;
+  else if (revocationDate) terminationRevocation = revocationDate;
+
+  const extensionProbationPeriod = document.getElementById("extensionProbationPeriod").value;
+
+  const terminationTransfer = document.getElementById("terminationTransfer").value;
+  const terminationTransferDate = document.getElementById("terminationTransferDate").value;
+
+  let terminationTransferCombined = "";
+  if (terminationTransfer && terminationTransferDate) terminationTransferCombined = `${terminationTransfer} - ${terminationTransferDate}`;
+  else if (terminationTransfer) terminationTransferCombined = terminationTransfer;
+  else if (terminationTransferDate) terminationTransferCombined = terminationTransferDate;
+
+  if (ccno === "" || petitioner === "") {
+    alert("CC. No. and Petitioner's Name are required.");
+    return;
+  }
+  if (finalRevocationType === "Others (Specify)" && finalRevocationOther === "") {
+    alert("Please specify the Revocation Type.");
+    return;
+  }
+
+  const dateReceivedFixed = toNoonUTCDate(dateReceived);
+  const dateOfOrderFixed = toNoonUTCDate(dateOfOrder);
+  const psirDateFixed = toNoonUTCDate(psirDate);
+  const denialDateFixed = toNoonUTCDate(denialDate);
+  const withdrawDateFixed = toNoonUTCDate(withdrawDate);
+  const cancelDateFixed = toNoonUTCDate(cancelDate);
+  const dateReceivedPPOFixed = toNoonUTCDate(dateReceivedPPO);
+  const probationStartsFixed = toNoonUTCDate(probationStarts);
+  const probationEndsFixed = toNoonUTCDate(probationEnds);
+  const finalExtensionFixed = toNoonUTCDate(finalExtension);
+  const extensionProbationPeriodFixed = toNoonUTCDate(extensionProbationPeriod);
+  const terminationTransferDateFixed = toNoonUTCDate(terminationTransferDate);
+
+  const effectiveYear = dateReceived
+    ? Number(formatDate(dateReceived).slice(0, 4))
+    : Number(activeYear);
+
+  const payload = {
+    year: effectiveYear,
+    referral, petitioner, address, ccno, court, offense, sentence,
+
+    dateReceived: dateReceivedFixed,
+    date_received: dateReceivedFixed,
+
+    dateOfOrder: dateOfOrderFixed,
+    date_of_order: dateOfOrderFixed,
+
+    officer,
+
+    psirDate: psirDateFixed,
+    psir_date: psirDateFixed,
+
+    denialDate: denialDateFixed,
+    denial_date: denialDateFixed,
+
+    withdrawDate: withdrawDateFixed,
+    withdraw_date: withdrawDateFixed,
+
+    cancelDate: cancelDateFixed,
+    cancel_date: cancelDateFixed,
+
+    docketNo,
+    docket_no: docketNo,
+    classification,
+
+    supervisingOfficer,
+    supervising_officer: supervisingOfficer,
+
+    dateReceivedPPO: dateReceivedPPOFixed,
+    date_received_ppo: dateReceivedPPOFixed,
+
+    probationStarts: probationStartsFixed,
+    probation_starts: probationStartsFixed,
+
+    probationEnds: probationEndsFixed,
+    probation_ends: probationEndsFixed,
+
+    finalTermination,
+    final_termination: finalTermination,
+
+    finalRevocation,
+    final_revocation: finalRevocation,
+
+    finalExtension: finalExtensionFixed,
+    final_extension: finalExtensionFixed,
+
+    terminationType,
+    termination_type: terminationType,
+
+    terminationRevocation,
+    termination_revocation: terminationRevocation,
+
+    extensionProbationPeriod: extensionProbationPeriodFixed,
+    extension_probation_period: extensionProbationPeriodFixed,
+
+    terminationTransferCombined,
+    termination_transfer_combined: terminationTransferCombined,
+
+    terminationTransferDate: terminationTransferDateFixed
+  };
+
+  const res = await fetch(`${API_BASE}/api/records`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    alert(data.message || "Failed to save record.");
+    return;
+  }
+
+  clearForm();
+  await renderTableForYear(activeYear);
+}
+
+function clearForm() {
+  document.getElementById("referral").value = "";
+  document.getElementById("petitioner").value = "";
+  document.getElementById("address").value = "";
+  document.getElementById("ccno").value = "";
+  document.getElementById("court").value = "";
+  document.getElementById("offense").value = "";
+  document.getElementById("sentence").value = "";
+  document.getElementById("dateReceived").value = "";
+  document.getElementById("dateOfOrder").value = "";
+  document.getElementById("officer").value = "";
+
+  document.getElementById("psirType").selectedIndex = 0;
+  document.getElementById("psirSelectedDate").value = "";
+  document.getElementById("psirDate").value = "";
+  document.getElementById("denialDate").value = "";
+  document.getElementById("withdrawDate").value = "";
+  document.getElementById("cancelDate").value = "";
+
+  document.getElementById("docketNo").value = "";
+
+  const docketType = document.getElementById("docketType");
+  const docketNumber = document.getElementById("docketNumber");
+  if (docketType) docketType.selectedIndex = 0;
+  if (docketNumber) docketNumber.value = "";
+
+  const cpsFields = document.getElementById("cpsFields");
+  const cpsRequestingOffice = document.getElementById("cpsRequestingOffice");
+  if (cpsRequestingOffice) cpsRequestingOffice.value = "";
+  if (cpsFields) cpsFields.style.display = "none";
+
+  document.getElementById("classification").value = "";
+  document.getElementById("supervisingOfficer").value = "";
+  document.getElementById("dateReceivedPPO").value = "";
+
+  document.getElementById("probationStarts").value = "";
+  document.getElementById("probationEnds").value = "";
+
+  document.getElementById("finalTerminationType").selectedIndex = 0;
+  document.getElementById("finalTerminationDate").value = "";
+
+  document.getElementById("finalRevocationType").selectedIndex = 0;
+  document.getElementById("finalRevocationDate").value = "";
+  document.getElementById("finalRevocationOther").value = "";
+  document.getElementById("finalRevocationOther").style.display = "none";
+  document.getElementById("finalRevocationOther").required = false;
+
+  document.getElementById("finalExtension").value = "";
+
+  document.getElementById("terminationTypeSelect").selectedIndex = 0;
+  document.getElementById("terminationDate").value = "";
+  document.getElementById("terminationTypeSelect").disabled = false;
+
+  document.getElementById("revocationType").selectedIndex = 0;
+  document.getElementById("revocationDate").value = "";
+  document.getElementById("revocationTypeOther").value = "";
+  document.getElementById("revocationTypeOther").style.display = "none";
+  document.getElementById("revocationTypeOther").required = false;
+
+  document.getElementById("extensionProbationPeriod").value = "";
+
+  document.getElementById("terminationTransfer").value = "";
+  document.getElementById("terminationTransferDate").value = "";
+
+  const referralType = document.getElementById("referralType");
+  const referralNumber = document.getElementById("referralNumber");
+  const cpiFields = document.getElementById("cpiFields");
+  const requestingOffice = document.getElementById("requestingOffice");
+  const serviceRequested = document.getElementById("serviceRequested");
+  const dateSubmitted = document.getElementById("dateSubmitted");
+
+  if (referralType) referralType.selectedIndex = 0;
+  if (referralNumber) referralNumber.value = "";
+  if (requestingOffice) requestingOffice.value = "";
+  if (serviceRequested) serviceRequested.selectedIndex = 0;
+  if (dateSubmitted) dateSubmitted.value = "";
+  if (cpiFields) cpiFields.style.display = "none";
+}
+
+/* =====================================================
+   EDIT / SAVE / CANCEL
+   ===================================================== */
+function startEditRow(id) {
+  id = String(id);
+  const row = document.querySelector(`#dataTable tbody tr[data-id="${CSS.escape(id)}"]`);
+  const r = recordsCache.get(id);
+  if (!row) {
+    alert("Edit failed: row not found.");
+    return;
+  }
+  if (!r) {
+    alert("Edit failed: record not found in cache.");
+    return;
+  }
+
+  if (row.dataset.editing === "1") return;
+  row.dataset.editing = "1";
+  row.dataset.originalHtml = row.innerHTML;
+
+  function inputText(value) {
+    return `<input type="text" value="${escapeHtml(value || "")}">`;
+  }
+  function inputDate(value) {
+    return `<input type="date" value="${escapeHtml(formatDate(value || ""))}">`;
+  }
+
+  row.cells[1].innerHTML = inputText(pick(r, "referral", "referral"));
+  row.cells[2].innerHTML = inputText(pick(r, "petitioner", "petitioner"));
+  row.cells[3].innerHTML = inputText(pick(r, "address", "address"));
+  row.cells[4].innerHTML = inputText(pick(r, "ccno", "ccno"));
+  row.cells[5].innerHTML = inputText(pick(r, "court", "court"));
+  row.cells[6].innerHTML = inputText(pick(r, "offense", "offense"));
+  row.cells[7].innerHTML = inputText(pick(r, "sentence", "sentence"));
+  row.cells[8].innerHTML = inputDate(pick(r, "date_received", "dateReceived"));
+  row.cells[9].innerHTML = inputDate(pick(r, "date_of_order", "dateOfOrder"));
+  row.cells[10].innerHTML = inputText(pick(r, "officer", "officer"));
+
+  row.cells[11].innerHTML = inputDate(pick(r, "psir_date", "psirDate"));
+  row.cells[12].innerHTML = inputDate(pick(r, "denial_date", "denialDate"));
+  row.cells[13].innerHTML = inputDate(pick(r, "withdraw_date", "withdrawDate"));
+  row.cells[14].innerHTML = inputDate(pick(r, "cancel_date", "cancelDate"));
+
+  row.cells[15].innerHTML = inputText(pick(r, "docket_no", "docketNo"));
+  row.cells[16].innerHTML = inputText(pick(r, "classification", "classification"));
+  row.cells[17].innerHTML = inputText(pick(r, "supervising_officer", "supervisingOfficer"));
+  row.cells[18].innerHTML = inputDate(pick(r, "date_received_ppo", "dateReceivedPPO"));
+
+  row.cells[19].innerHTML = inputDate(pick(r, "probation_starts", "probationStarts"));
+  row.cells[20].innerHTML = inputDate(pick(r, "probation_ends", "probationEnds"));
+
+  row.cells[21].innerHTML = inputText(pick(r, "final_termination", "finalTermination"));
+  row.cells[22].innerHTML = inputText(pick(r, "final_revocation", "finalRevocation"));
+  row.cells[23].innerHTML = inputDate(pick(r, "final_extension", "finalExtension"));
+
+  row.cells[24].innerHTML = inputText(pick(r, "termination_type", "terminationType"));
+  row.cells[25].innerHTML = inputText(pick(r, "termination_revocation", "terminationRevocation"));
+  row.cells[26].innerHTML = inputDate(pick(r, "extension_probation_period", "extensionProbationPeriod"));
+  row.cells[27].innerHTML = inputText(pick(r, "termination_transfer_combined", "terminationTransferCombined"));
+
+  row.cells[28].innerHTML = `
+    <button type="button" onclick="saveRowEdit('${escapeHtml(id)}')">Save</button>
+    <button type="button" onclick="cancelRowEdit('${escapeHtml(id)}')" style="margin-left:6px;">Cancel</button>
+  `;
+}
+
+function cancelRowEdit(id) {
+  id = String(id);
+  const row = document.querySelector(`#dataTable tbody tr[data-id="${CSS.escape(id)}"]`);
+  if (!row) return;
+  row.innerHTML = row.dataset.originalHtml || row.innerHTML;
+  row.dataset.editing = "0";
+  filterBySurname();
+  updateNumbers();
+}
+
+async function saveRowEdit(id) {
+  id = String(id);
+  const row = document.querySelector(`#dataTable tbody tr[data-id="${CSS.escape(id)}"]`);
+  if (!row) return;
+
+  function valText(cellIndex) {
+    const el = row.cells[cellIndex].querySelector("input");
+    return el ? el.value.trim() : "";
+  }
+  function valDate(cellIndex) {
+    const el = row.cells[cellIndex].querySelector('input[type="date"]');
+    return el ? el.value : "";
+  }
+
+  const ccno = valText(4);
+  const petitioner = valText(2);
+
+  if (!ccno || !petitioner) {
+    alert("CC. No. and Petitioner's Name are required.");
+    return;
+  }
+
+  const ok = confirm("Save changes to this record?");
+  if (!ok) return;
+
+  const dr = toNoonUTCDate(valDate(8));
+  const doo = toNoonUTCDate(valDate(9));
+  const ps = toNoonUTCDate(valDate(11));
+  const dd = toNoonUTCDate(valDate(12));
+  const wd = toNoonUTCDate(valDate(13));
+  const cd = toNoonUTCDate(valDate(14));
+
+  const dppo = toNoonUTCDate(valDate(18));
+  const ps1 = toNoonUTCDate(valDate(19));
+  const pe1 = toNoonUTCDate(valDate(20));
+  const fe = toNoonUTCDate(valDate(23));
+  const epp = toNoonUTCDate(valDate(26));
+
+  const editedDateReceived = valDate(8);
+  const effectiveYear = editedDateReceived
+    ? Number(formatDate(editedDateReceived).slice(0, 4))
+    : Number(getActiveYear());
+
+  const payload = {
+    year: effectiveYear,
+    referral: valText(1),
+    petitioner: valText(2),
+    address: valText(3),
+    ccno,
+    court: valText(5),
+    offense: valText(6),
+    sentence: valText(7),
+
+    dateReceived: dr,
+    date_received: dr,
+
+    dateOfOrder: doo,
+    date_of_order: doo,
+
+    officer: valText(10),
+
+    psirDate: ps,
+    psir_date: ps,
+
+    denialDate: dd,
+    denial_date: dd,
+
+    withdrawDate: wd,
+    withdraw_date: wd,
+
+    cancelDate: cd,
+    cancel_date: cd,
+
+    docketNo: valText(15),
+    docket_no: valText(15),
+
+    classification: valText(16),
+
+    supervisingOfficer: valText(17),
+    supervising_officer: valText(17),
+
+    dateReceivedPPO: dppo,
+    date_received_ppo: dppo,
+
+    probationStarts: ps1,
+    probation_starts: ps1,
+
+    probationEnds: pe1,
+    probation_ends: pe1,
+
+    finalTermination: valText(21),
+    final_termination: valText(21),
+
+    finalRevocation: valText(22),
+    final_revocation: valText(22),
+
+    finalExtension: fe,
+    final_extension: fe,
+
+    terminationType: valText(24),
+    termination_type: valText(24),
+
+    terminationRevocation: valText(25),
+    termination_revocation: valText(25),
+
+    extensionProbationPeriod: epp,
+    extension_probation_period: epp,
+
+    terminationTransferCombined: valText(27),
+    termination_transfer_combined: valText(27)
+  };
+
+  const res = await fetch(`${API_BASE}/api/records/${encodeURIComponent(id)}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    alert(data.message || "Update failed.");
+    return;
+  }
+
+  await renderTableForYear(getActiveYear());
+}
+
+/* =====================================================
+   DELETE
+   ===================================================== */
+async function confirmDeleteRecord(id) {
+  id = String(id);
+  const ok = confirm("Delete this record permanently?");
+  if (!ok) return;
+
+  const res = await fetch(`${API_BASE}/api/records/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    alert(data.message || "Delete failed.");
+    return;
+  }
+
+  await renderTableForYear(getActiveYear());
+}
+
+/* =====================================================
+   ARCHIVE / UNARCHIVE
+   ===================================================== */
+async function toggleArchiveRecord(id) {
+  id = String(id);
+  const r = recordsCache.get(id);
+  if (!r) {
+    alert("Archive failed: record not found in cache.");
+    return;
+  }
+
+  const nextArchived = !pick(r, "archived", "archived");
+  const ok = confirm(nextArchived ? "Archive this record?" : "Unarchive this record?");
+  if (!ok) return;
+
+  const res = await fetch(`${API_BASE}/api/records/${encodeURIComponent(id)}/archive`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ archived: nextArchived })
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    alert(data.message || `Archive action failed (${res.status}).`);
+    return;
+  }
+
+  await renderTableForYear(getActiveYear());
+}
+
+/* =====================================================
+   INIT
+   ===================================================== */
+document.addEventListener("DOMContentLoaded", function() {
+  initUnlimitedYearDropdown();
+
+  const toggle = document.getElementById("showArchivedToggle");
+  if (toggle) {
+    toggle.addEventListener("change", () => {
+      const y = getActiveYear();
+      if (y) renderTableForYear(y).catch(console.error);
+    });
+  }
+
+  const style = document.createElement("style");
+  style.textContent = `
+    .top-right-logos, .bottom-right-wrapper, .bottom-left-logo { pointer-events:none; }
+    .table-wrapper { position:relative; z-index:5; }
+  `;
+  document.head.appendChild(style);
+});
+</script>
+
+</body>
+</html>

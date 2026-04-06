@@ -1,0 +1,1190 @@
+body { 
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 40px;
+    background-color: #BDB58F; /* DOJ Brown */
+}
+
+.container {
+    background: #ffffff;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(128, 0, 32, 0.2);
+    border: 3px solid #800020;
+    border-radius: 8px;
+    position: relative;
+    height: auto;
+    overflow: visible;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px; /* increased to prevent overlap */
+}
+
+/* ✅ Adjusted header sizes + tighter spacing */
+.header h1{
+    font-size: 13px;
+    margin: 2px 0;
+    line-height: 1.2;
+    font-weight: normal;
+}
+
+.header h2{
+    font-size: 13px;
+    margin: 2px 0;
+    line-height: 1.2;
+}
+
+.header h3{
+    font-size: 14px;
+    margin: 3px 0;
+    line-height: 1.2;
+    color: #800020;
+}
+
+.header h4{
+    font-size: 14px;
+    margin: 2px 0;
+    line-height: 1.2;
+    color: #800020;
+}
+
+.header h5{
+    font-size: 15px;  /* main office name slightly bigger */
+    margin: 3px 0;
+    line-height: 1.2;
+    color: #0978a1;
+}
+
+.header h6,
+.header h7{
+    font-size: 13px;
+    margin: 2px 0;
+    line-height: 1.2;
+}
+
+/* ===============================
+   FIXED HEADER CENTERING
+   =============================== */
+
+.header-top {
+    position: relative;
+    min-height: 175px; /* increased height to avoid overlap */
+}
+
+/* Left Logo */
+.logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 130px;
+    height: auto;
+}
+
+/* Center Header Text Properly */
+.header-text {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    padding: 0 180px; /* spacing to avoid logos */
+    box-sizing: border-box;
+}
+/* ===============================
+   MASTERLIST TITLE
+   =============================== */
+
+.masterlist-title-box {
+    width: 70%;
+    margin: 10px auto 20px auto; /* added top margin */
+    background-color: #FFF9DC;
+    border: 1px solid #800020;
+    border-radius: 6px;
+    padding: 12px 10px;
+}
+
+.masterlist-title {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #800020;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.masterlist-divider {
+    margin: 10px auto 0 auto;
+    height: 2px;
+    width: 80%;
+    background-color: #800020;
+}
+
+/* ===============================
+   YEAR DROPDOWN + SEARCH (UPDATED)
+   =============================== */
+
+.year-tabs-bar{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap:12px;
+  margin: 0 0 12px 0;
+}
+
+/* ✅ NEW wrapper for dropdown */
+.year-select{
+  display:flex;
+  align-items:center;
+}
+
+/* ✅ Dropdown styled like your old year buttons */
+#yearSelect{
+  padding:6px 12px;
+  border:1px solid #800020;
+  background:#FFF9DC;
+  cursor:pointer;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+  color:#070707;
+  outline:none;
+}
+
+/* ✅ Remove old year tab styles (safe, in case still exists somewhere) */
+.year-tabs{
+  display:none;
+}
+
+.search-box{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.search-box input{
+  padding:6px;
+  font-size:12px;
+  width: 220px;
+  border:1px solid #800020;
+  border-radius:6px;
+  background:#FFF9DC;
+  color:#070707;
+}
+
+.clear-search{
+  padding:6px 10px;
+  background:#800020;
+  color:#ffffff;
+  border:none;
+  cursor:pointer;
+  border-radius:6px;
+  font-size:12px;
+}
+
+.clear-search:hover{
+  background:#A52A2A;
+}
+
+/* =============================== */
+
+.form-section {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.form-section input {
+    padding: 6px;
+    font-size: 12px;
+    width: 160px;
+    border: 1px solid #800020;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #070707;
+}
+
+.form-section select {
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #800020;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #070707;
+}
+
+/* ✅ MAKE ALL "LABELS" (PLACEHOLDERS) IN INPUT BOXES BLACK */
+.form-section input::placeholder{
+    color:#070707;
+    opacity:1;
+}
+
+/* ✅ MAKE ALL "LABELS" (SELECT PLACEHOLDER / FIRST OPTION) BLACK */
+#finalTerminationType,
+#finalRevocationType,
+#terminationTypeSelect,
+#revocationType,
+#psirType{
+    color:#070707;
+}
+#finalTerminationType:valid,
+#finalRevocationType:valid,
+#terminationTypeSelect:valid,
+#revocationType:valid,
+#psirType:valid{
+    color:#070707;
+}
+
+/* ONE COMBINED INPUT BOX (select + date) */
+.combo-field{
+    display:flex;
+    width: 330px;              /* looks like 1 long input box */
+    border: 1px solid #800020;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.combo-field select{
+    width: 150px;
+    border: none;
+    outline: none;
+    border-right: 1px solid #800020;
+    border-radius: 0;
+}
+
+/* 3-part combined box (select + date + others text) still "one input box" */
+.combo-field-3{
+    width: 520px; /* one long box that holds: dropdown + date + specify */
+}
+
+.combo-field input[type="date"]{
+    width: 180px;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding-right: 60px; /* calendar icon spacing */
+}
+
+.combo-field-3 input[type="date"]{
+    width: 170px;
+    border-right: 1px solid #800020;
+}
+
+#finalRevocationOther{
+    flex: 1;
+    min-width: 120px;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding: 6px;
+    font-size: 12px;
+    color: #070707;
+}
+
+/* ✅ Termination Revocation "Specify..." inside combo (matches Final Report behavior) */
+#revocationTypeOther{
+    flex: 1;
+    min-width: 120px;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding: 6px;
+    font-size: 12px;
+    color: #070707;
+}
+
+/* ✅ MAKE ALL DATE "LABELS" (data-placeholder text) BLACK */
+input[type="date"]::before{
+    color:#070707;
+    opacity: 1;
+}
+
+.form-section button {
+    padding: 6px 12px;
+    background-color: #800020;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.form-section button:hover {
+    background-color: #A52A2A;
+}
+
+/* ✅ BASE SECTION BOX */
+.section-box{
+    width: 100%;
+    border: 1px solid #800020;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.section-box-title{
+    background: #D6ECFA; /* default; overridden for PSIR title */
+    color: #000;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid #800020;
+}
+
+/* ✅ INVESTIGATION */
+.investigation-box{
+    background: #D6ECFA; /* same as investigation row */
+}
+
+.investigation-grid{
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(1, auto);
+    grid-auto-columns: minmax(160px, 160px);
+    gap: 8px;
+    overflow-x: auto;
+    align-items: start;
+}
+
+.investigation-grid input{
+    width: 160px;
+    box-sizing: border-box;
+}
+
+.investigation-grid input[type="date"]{
+    width: 160px;
+}
+
+/* ✅ FIX ONLY FOR "Date Received" */
+.investigation-grid input.date-received{
+    padding-right: 85px;
+}
+
+.investigation-grid input.date-received::before{
+    max-width: calc(100% - 95px);
+}
+
+.investigation-grid input.date-received::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* ✅ PSIR DATE SUBMITTED TO COURT BOX */
+.psir-box{
+    background: #FAD6E6; /* same as .psir-date-row */
+}
+
+.section-box-title.psir-title{
+    background: #FAD6E6; /* same as .psir-date-row */
+}
+
+/* ✅ UPGRADED PSIR GRID (dropdown + date combo) */
+.psir-grid{
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 8px;
+    overflow-x: auto;
+    align-items: start;
+}
+
+/* Keep PSIR date label safe from icon overlap */
+#psirCombo input[type="date"]{
+    padding-right: 85px;
+}
+#psirCombo input[type="date"]::before{
+    max-width: calc(100% - 95px);
+}
+#psirCombo input[type="date"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* ✅ PROBATION BOX (same color as probation row) */
+.probation-box{
+    background: #00AEEF; /* same as .probation-row */
+}
+
+.section-box-title.probation-title{
+    background: #00AEEF; /* same as probation row */
+    color: #000;
+}
+
+/* ✅ Make probation inputs horizontal like investigation (auto-flow column) */
+.probation-grid{
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(1, auto);
+    grid-auto-columns: max-content; /* ✅ prevents squeezing/overlap */
+    gap: 8px;
+    overflow-x: auto;
+    align-items: start;
+}
+
+.probation-grid input,
+.probation-grid select{
+    width: 160px;
+    box-sizing: border-box;
+    background: #ffffff; /* keep inputs white like others */
+}
+
+/* Make date width consistent */
+.probation-grid input[type="date"]{
+    width: 160px;
+}
+
+/* ✅ Base safety so labels never collide with calendar icon */
+.probation-grid input.probation-date{
+    padding-right: 85px;
+}
+.probation-grid input.probation-date::before{
+    max-width: calc(100% - 95px);
+}
+.probation-grid input.probation-date::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* ✅ "Date Received by the PPO" stays longer */
+.probation-grid input.probation-date-ppo{
+    width: 220px; /* longer box */
+    padding-right: 95px; /* extra space for icon */
+}
+.probation-grid input.probation-date-ppo::before{
+    max-width: calc(100% - 105px);
+}
+
+/* ✅ Starts input: same size as Docket No + shows "Starts" label (not dd/mm/yyyy) */
+.probation-grid input.probation-date-starts{
+    width: 160px;        /* same as docket no */
+    margin-left: 8px;    /* spacing so it won't cover PPO box */
+    padding-right: 85px;
+}
+
+/* Ends input – same size as Starts */
+.probation-grid input.probation-date-ends{
+    width: 160px;      /* same as Docket No and Starts */
+    padding-right: 85px;
+}
+
+/* ===============================
+   ✅ NEW: PAROLE SECTION (PASTEL PURPLE)
+   - same sizing/behavior as PSIR + same combo size as Probation docket
+   =============================== */
+
+.parole-box{
+    background: #E6D6FA; /* pastel purple */
+}
+
+.section-box-title.parole-title{
+    background: #E6D6FA; /* pastel purple */
+    color: #000;
+    text-align: left;      /* match PSIR title placement */
+    padding-left: 12px;    /* same left padding */
+}
+
+/* make it horizontal like other sections */
+.parole-grid{
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 8px;
+    overflow-x: auto;
+    align-items: start;
+}
+
+/* ✅ Match EXACT look/size with probation "Docket No." combo */
+#paroleDocketCombo{
+  width: 330px;
+}
+
+#paroleDocketCombo select,
+#paroleDocketCombo input[type="text"]{
+  width: 150px;
+  flex: 0 0 150px;
+  padding: 6px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: #070707;
+  border: none;
+  outline: none;
+  border-radius: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#paroleDocketCombo input[type="text"]::placeholder{
+  color:#070707;
+  opacity:1;
+}
+
+/* ===============================
+   NEW: TERMINATION FORM BOX (like Final Report)
+   =============================== */
+
+.termination-box{
+    background: #FFF3B0; /* SAME as .termination-row */
+}
+
+.section-box-title.termination-title{
+    background: #FFF3B0; /* SAME as .termination-row */
+    color: #000;
+}
+
+.termination-grid{
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(1, auto);
+    grid-auto-columns: max-content;
+    gap: 8px;
+    overflow-x: auto;
+    align-items: start;
+}
+
+/* =============================== */
+
+.table-wrapper {
+    width: 100%;
+    background: #ffffff;
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    background-color: #ffffff;
+}
+
+th, td {
+    border: 1px solid #800020;
+    padding: 6px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+/* INVESTIGATION – Pastel Blue */
+.group-row {
+    background-color: #D6ECFA;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* PSIR DATE SUBMITTED TO COURT – Pastel Pink */
+.psir-date-row {
+    background-color: #FAD6E6;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* PROBATION SUPERVISION – Viva La Bleu */
+.probation-row {
+    background-color: #00AEEF;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* PROBATION PERIOD – Viva La Bleu */
+.probation-period-row {
+    background-color: #00AEEF;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* FINAL REPORT – Pastel Green */
+.final-report-row {
+    background-color: #D9F2D9;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* ✅ NEW: TERMINATION – Pastel Yellow */
+.termination-row {
+    background-color: #FFF3B0;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+th {
+    background-color: #800020;
+    color: white;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #FFF9DC;
+}
+
+/* Upper Right Logo */
+/* ===============================
+   UPPER RIGHT LOGOS (2 LOGOS)
+   =============================== */
+
+.top-right-logos{
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    display: flex;
+    gap: 12px;   /* space between logos */
+    align-items: center;
+}
+
+.top-right-logos img{
+    width: 140px;   /* SAME size for both */
+    height: auto;
+}
+
+/* ===========================
+   DATE INPUT (OVERLAP FIX)
+   =========================== */
+
+input[type="date"] {
+    position: relative;
+    color: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    padding-right: 60px;
+}
+
+input[type="date"]::before {
+    content: attr(data-placeholder);
+    position: absolute;
+    left: 8px;
+    top: 7px;
+    color: #070707;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 12px;
+    pointer-events: none;
+    max-width: calc(100% - 70px);
+    overflow: visible;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* ===========================
+   DATE INPUT (FINAL CLEAN FIX)
+   =========================== */
+
+input[type="date"]{
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding-right: 60px;
+}
+
+/* Hide native date text when empty */
+input[type="date"]:not(:focus):not(:valid){
+    color: transparent;
+}
+
+/* Custom placeholder */
+input[type="date"]:not(:focus):not(:valid)::before{
+    content: attr(data-placeholder);
+    position: absolute;
+    left: 8px;
+    top: 7px;
+    color: #070707;
+    pointer-events: none;
+}
+
+/* Show real date when selected */
+input[type="date"]:focus,
+input[type="date"]:valid{
+    color: #070707;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before{
+    content: "";
+}
+
+/* DOJ Maroon Calendar Icon */
+input[type="date"]::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+    opacity: 1;
+    margin-right: 10px;
+    filter: invert(9%) sepia(91%) saturate(4744%) hue-rotate(329deg) brightness(83%) contrast(104%);
+}
+
+/* ===============================
+   FINAL REPORT SECTION BOX
+   =============================== */
+
+.final-report-box{
+    background: #D9F2D9; /* SAME as final-report-row */
+}
+
+.section-box-title.final-report-title{
+    background: #D9F2D9; /* SAME as final-report-row */
+    color: #000;
+}
+
+/* ✅ INVESTIGATION title aligned to the LEFT */
+.investigation-box .section-box-title{
+    text-align: left;
+    padding-left: 12px;   /* adjust if you want more/less space */
+}
+
+/* ✅ LEFT align the titles for PSIR, PROBATION, FINAL REPORT, TERMINATION */
+.psir-box .section-box-title,
+.probation-box .section-box-title,
+.final-report-box .section-box-title,
+.termination-box .section-box-title{
+    text-align: left;
+    padding-left: 12px;  /* adjust spacing if needed */
+}
+
+/* Layout same style as investigation */
+.final-report-grid{
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(1, auto);
+    grid-auto-columns: max-content;
+    gap: 8px;
+    overflow-x: auto;
+    align-items: start;
+}
+
+/* Keep extension width aligned */
+.final-report-grid input[type="date"]{
+    width: 220px;
+}
+
+/* ✅ Termination date box */
+#finalTerminationCombo input[type="date"]{
+    width: 150px;        /* same as dropdown */
+    padding-right: 60px; /* keep consistent icon spacing */
+}
+#finalTerminationCombo input[type="date"]::-webkit-calendar-picker-indicator{
+    right: 6px;
+}
+
+/* ✅ Revocation date box (reference size) */
+#finalRevocationCombo input[type="date"]{
+    width: 150px;        /* match termination date width */
+    padding-right: 60px; /* match termination icon spacing */
+}
+#finalRevocationCombo input[type="date"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* ✅ UPDATED: Extension of Probation Period date box = SAME size as revocation date box */
+.final-report-grid input[type="date"][data-placeholder="Extension of Probation Period"]{
+    width: 150px;        /* same as revocation/termination */
+    padding-right: 60px; /* keep icon spacing consistent */
+}
+
+/* ✅ Put the calendar icon at the very end for Extension of Probation Period */
+.final-report-grid input[type="date"][data-placeholder="Extension of Probation Period"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px;          /* very end */
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* =====================================
+   FIX: Termination Type Calendar Icon
+   ===================================== */
+
+#finalTerminationCombo input[type="date"]{
+    position: relative;
+    padding-right: 60px;
+}
+
+#finalTerminationCombo input[type="date"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* =====================================
+   FIX: Termination Type Calendar Icon (UNDER TERMINATION)
+   ===================================== */
+
+#terminationTypeCombo input[type="date"]{
+    position: relative;
+    padding-right: 60px; /* space for icon */
+}
+
+#terminationTypeCombo input[type="date"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px;          /* very end of the box */
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* =====================================
+   FIX: Termination Revocation Date Icon
+   ===================================== */
+
+#terminationRevocationCombo input[type="date"]{
+    width: 150px;
+    padding-right: 60px;
+    border-right: 1px solid #800020;
+}
+
+#terminationRevocationCombo input[type="date"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* LOWER LEFT LOGO */
+.bottom-left-logo {
+    display: block;
+    margin-top: 15px;
+    width: 700px;
+    height: auto;
+}
+
+/* White divider line between each column name (header cells) */
+#dataTable thead tr:nth-child(2) th {
+    border-right: 1px solid #ffffff;
+}
+
+/* Remove divider on the last header cell */
+#dataTable thead tr:nth-child(2) th:last-child {
+    border-right: 2px solid #800020;
+}
+
+/* =====================================
+   TERMINATION Extension Date (Match Final Report)
+   ===================================== */
+
+.termination-grid input[type="date"][data-placeholder="Extension of Probation Period"]{
+    width: 150px;        /* SAME width as Final Report extension */
+    padding-right: 60px; /* same icon spacing */
+}
+
+.termination-grid input[type="date"][data-placeholder="Extension of Probation Period"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+}
+
+/* ✅ Make "Transfer to Other Courts/PPOS" wider */
+#terminationTransfer{
+    width: 165px;   /* adjust if you want it longer */
+}
+
+/* =====================================
+   TERMINATION Transfer Combo (Text + Date)
+   ===================================== */
+
+#terminationTransferCombo{
+    width: 400px;  /* longer like revocation combo */
+}
+
+#terminationTransferCombo input[type="text"]{
+    width: 170px;
+    border: none;
+    border-right: 1px solid #800020;
+    outline: none;
+}
+
+/* =========================================================
+   ✅ FINAL FIX: Make Transfer date EXACTLY like Termination Type date box
+   (same width, same padding, same icon positioning, no weird extra space)
+   ========================================================= */
+
+#terminationTransferCombo input[type="date"]{
+    width: 150px;                 /* ✅ same as termination type date */
+    border: none;
+    outline: none;
+    border-radius: 0;
+    position: relative;
+    padding-right: 60px !important; /* ✅ same as termination type date */
+}
+
+/* Icon behaves EXACTLY like termination type date icon */
+#terminationTransferCombo input[type="date"]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    right: 6px !important;          /* ✅ same as termination type */
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0 !important;     /* ✅ override global 10px */
+}
+
+/* ✅ Add Record button aligned RIGHT */
+.add-record-btn{
+    margin-left: auto;      /* pushes the button to the right */
+    align-self: flex-start; /* keeps it on the top row of the form section */
+    padding: 25px 30px;     /* ✅ bigger button */
+    font-size: 14px;        /* ✅ slightly larger text */
+    border-radius: 6px;     /* ✅ slightly rounder */
+}
+/* LOWER RIGHT WRAPPER */
+.bottom-right-wrapper{
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+    text-align: center;
+}
+
+/* LOWER RIGHT IMAGE */
+.bottom-right-logo{
+    width: 65px;
+    height: auto;
+    display: block;
+    margin: 0 auto 6px auto;
+}
+
+/* ISO TEXT STYLE */
+.iso-text{
+    font-size: 9px;
+    font-weight: bold;
+    color: #070707;
+    line-height: 1.4;
+}
+/* =========================
+   YEAR + SEARCH BAR LAYOUT
+   ========================= */
+
+.year-tabs-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* =========================
+   THREE DOT MENU
+   ========================= */
+
+.menu-wrapper {
+    position: absolute;
+    right: 0;
+    top: -28px;   /* makes it sit above Clear button */
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #800020;
+    font-weight: bold;
+}
+
+.menu-btn:hover {
+    color: #a52a2a;
+}
+
+.menu-dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 130px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    display: none;
+    z-index: 999;
+}
+
+.menu-item {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu-item:hover {
+    background-color: #f3f3f3;
+}
+/* ✅ CHANGE 2: Make the Actions column background WHITE (header + body) */
+
+/* Header cell (ACTIONS) */
+#dataTable thead th.actions-col{
+  background: #fff !important;
+  color: #000; /* optional, keeps text readable */
+}
+
+/* Body cells in the Actions column (last column) */
+#dataTable tbody td:last-child{
+  background: #fff !important;
+}
+
+/* Optional: keep archived rows faded but Actions stays white */
+#dataTable tbody tr[style*="opacity"] td:last-child{
+  background: #fff !important;
+}
+/* =========================
+   YEAR + SHOW ARCHIVED (MATCHED)
+   Put this near your YEAR styles (and REMOVE older .year-controls/.archived-toggle blocks)
+   ========================= */
+
+.year-controls{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ✅ Make Select Year and Show Archived look identical */
+#yearSelect,
+.archived-toggle{
+  height: 38px;                 /* same height */
+  padding: 0 12px;              /* same padding */
+  border: 1px solid #800020;    /* same border */
+  border-radius: 6px;           /* same radius */
+  background: #FFF9DC;          /* same background color */
+  color: #070707;               /* same text color */
+  font-size: 12px;              /* same font size */
+  font-weight: bold;            /* same font weight */
+  font-family: Arial, Helvetica, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* keep dropdown behavior */
+#yearSelect{
+  cursor: pointer;
+  outline: none;
+}
+
+/* ✅ Label behaves like a "box" */
+.archived-toggle{
+  cursor: pointer;
+  user-select: none;
+  gap: 8px;                     /* spacing between checkbox and text */
+}
+
+/* ✅ Checkbox styling (keeps it neat inside the box) */
+.archived-toggle input{
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #800020;        /* maroon check */
+}
+
+/* =========================================================
+   ✅ NEW FIX: Make PI/CPI No. input EXACT SAME SIZE + LOOK
+   as the "New Referrals Received" dropdown
+   ========================================================= */
+
+/* The referral combo must be two equal halves */
+#referralCombo{
+  width: 330px;                 /* keep your current combo width */
+}
+/* ✅ Make Docket No combo EXACTLY like New Referrals Received combo */
+#docketCombo{
+  width: 330px;                 /* same combo width */
+}
+
+#docketCombo select,
+#docketCombo input[type="text"]{
+  width: 150px;                 /* same as dropdown width */
+  flex: 0 0 150px;
+  padding: 6px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: #070707;
+  border: none;
+  outline: none;
+  border-radius: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Placeholder color same as others */
+#docketCombo input[type="text"]::placeholder{
+  color:#070707;
+  opacity:1;
+}
+
+/* Make both controls identical */
+#referralCombo select,
+#referralCombo input[type="text"]{
+  width: 150px;                 /* ✅ EXACT same as dropdown width */
+  flex: 0 0 150px;              /* ✅ prevent stretching */
+  padding: 6px;                 /* ✅ same padding */
+  font-size: 12px;              /* ✅ same font */
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;          /* ✅ same background */
+  color: #070707;
+  border: none;                 /* combo-field owns the border */
+  outline: none;
+  border-radius: 0;
+  height: 100%;                 /* match combo height */
+  box-sizing: border-box;
+}
+
+/* Keep the divider line between them (select already has border-right in your CSS) */
+#referralCombo input[type="text"]{
+  border-left: none;
+}
+
+/* Placeholder color same as your other inputs */
+#referralCombo input[type="text"]::placeholder{
+  color:#070707;
+  opacity:1;
+}
+
+/* ✅ Match Date Received calendar icon position for the NEW date box */
+.investigation-grid #dateofOrder::-webkit-calendar-picker-indicator{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 0;
+}
+
+/* (kept) */
+.parole-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
