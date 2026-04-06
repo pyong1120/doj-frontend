@@ -310,14 +310,14 @@
 const token = localStorage.getItem("token");
 if (!token) {
   alert("You must login first.");
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }
 
 const API_BASE = "https://doj-backend-inqm.onrender.com";
 
 function logout() {
   localStorage.removeItem("token");
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }
 
 async function confirmAddRecord() {
