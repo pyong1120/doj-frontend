@@ -4,31 +4,38 @@
   <meta charset="UTF-8">
   <title>San Pablo City Parole and Probation Office</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 
 <div class="container">
+<div class="header">
+  <div class="header-row">
 
-  <!-- UPPER RIGHT LOGOS WRAPPER -->
-  <div class="top-right-logos">
-    <img src="doj.png" alt="Second Logo">
-    <img src="OIP.png" alt="Right Logo">
-  </div>
-
-  <div class="header">
-    <div class="header-top">
-      <img src="DOJ-PPA LOGO.png" alt="Office Logo" class="logo">
-      <div class="header-text">
-        <h1>Republic of the Philippines</h1>
-        <h2>Department of Justice</h2>
-        <h3>PAROLE AND PROBATION ADMINISTRATION</h3>
-        <h4>REGIONAL OFFICE NO. IV-A (CALABARZON)</h4>
-        <h5>SAN PABLO CITY PAROLE & PROBATION OFFICE</h5>
-        <h6>Kagawaran ng Katarungan, Capitol Site, San Pablo City, Laguna</h6>
-        <h7>(049-561-2224) sanpablocityppo4000@gmail.com</h7>
-      </div>
+    <!-- LEFT: PPA LOGO -->
+    <div class="header-left">
+      <img src="DOJ-PPA LOGO.png" alt="PPA Logo" class="logo">
     </div>
+
+    <!-- CENTER: TEXT -->
+    <div class="header-text">
+      <h1>Republic of the Philippines</h1>
+      <h2>Department of Justice</h2>
+      <h3>PAROLE AND PROBATION ADMINISTRATION</h3>
+      <h4>REGIONAL OFFICE NO. IV-A (CALABARZON)</h4>
+      <h5>SAN PABLO CITY PAROLE &amp; PROBATION OFFICE</h5>
+      <h6>Kagawaran ng Katarungan, Capitol Site, San Pablo City, Laguna</h6>
+      <div class="header-contact">(049-561-2224) sanpablocityppo4000@gmail.com</div>
+    </div>
+
+    <!-- RIGHT: DOJ + BAGONG PILIPINAS -->
+    <div class="header-right">
+      <img src="doj.png" alt="DOJ Logo" class="top-logo">
+      <img src="OIP.png" alt="Bagong Pilipinas Logo" class="top-logo">
+    </div>
+
   </div>
+</div>
 
   <!-- MASTERLIST TITLE -->
   <div class="masterlist-title-box">
@@ -43,7 +50,20 @@
           <option value="" disabled selected>Select Year</option>
         </select>
       </div>
-
+  <div class="masterlist-type-buttons">
+  <button type="button" id="piBtn" class="year-like-btn active-type" onclick="setMasterlistType('PI')">
+    PI
+  </button>
+  <button type="button" id="cpiBtn" class="year-like-btn" onclick="setMasterlistType('CPI')">
+    CPI
+  </button>
+   <button type="button" id="ppiBtn" class="year-like-btn" onclick="setMasterlistType('PPI')">
+    PPI
+  </button>
+  <button type="button" id="cppiBtn" class="year-like-btn" onclick="setMasterlistType('CPPI')">
+  CPPI
+</button>
+</div>
       <label class="archived-toggle">
         <input type="checkbox" id="showArchivedToggle" />
         <span>Show Archived</span>
@@ -72,15 +92,9 @@
       <div class="section-box-title">INVESTIGATION</div>
       <div class="investigation-grid">
 
-        <!-- PI/CPI dropdown + number input -->
-        <div class="combo-field" id="referralCombo" style="grid-column: span 2;">
-          <select id="referralType">
-            <option value="" disabled selected>New Referrals Received</option>
-            <option value="PI">PI</option>
-            <option value="CPI">CPI</option>
-          </select>
-          <input type="text" id="referralNumber" placeholder="PI or CPI No.">
-        </div>
+       <div class="combo-field" id="referralCombo" style="grid-column: span 2;">
+  <input type="text" id="referralNumber" placeholder="PI No.">
+</div>
 
         <!-- CPI-only fields -->
         <div id="cpiFields" style="display:none; grid-column: span 2;">
@@ -109,6 +123,19 @@
         <input type="date" id="dateReceived" class="date-received" data-placeholder="Date Received" required>
         <input type="date" id="dateOfOrder" class="date-received" data-placeholder="Date of Order" required>
         <input type="text" id="officer" placeholder="Investigating Officer">
+        <input type="text" id="cpiOfficeFrom" placeholder="CPI Office From" style="display:none;">
+<select id="cpiServiceRequested" style="display:none;">
+  <option value="" disabled selected>CPI Service Requested</option>
+  <option value="Full Blown">Full Blown</option>
+  <option value="Simple CI">Simple CI</option>
+</select>
+
+<input type="text" id="cppiOfficeFrom" placeholder="CPPI Office From" style="display:none;">
+<select id="cppiServiceRequested" style="display:none;">
+  <option value="" disabled selected>CPPI Service Requested</option>
+  <option value="Full Blown">Full Blown</option>
+  <option value="Simple CI">Simple CI</option>
+</select>
       </div>
     </div>
 
@@ -137,24 +164,17 @@
       <div class="section-box-title probation-title">PROBATION SUPERVISION &amp; PROBATION PERIOD</div>
       <div class="probation-grid">
 
-        <!-- Docket No combo -->
-        <div class="combo-field" id="docketCombo">
-          <select id="docketType">
-            <option value="" disabled selected>Docket No.</option>
-            <option value="PS">PS</option>
-            <option value="CPS">CPS</option>
-          </select>
-          <input type="text" id="docketNumber" placeholder="PS or CPS No.">
-        </div>
+        <!-- Docket No automatic field -->
+<div id="docketCombo">
+  <input type="text" id="docketNumber" placeholder="PS No.">
+</div>
+<input type="hidden" id="docketNo">
 
         <!-- CPS-only field -->
         <div id="cpsFields" style="display:none; grid-column: span 2;">
           <label for="cpsRequestingOffice" style="display:block; font-size:12px; margin:6px 0 4px;">Requesting Office</label>
           <input type="text" id="cpsRequestingOffice" placeholder="Requesting Office">
         </div>
-
-        <input type="text" id="docketNo" placeholder="Docket No.">
-
         <input type="text" id="classification" placeholder="Classification">
         <input type="text" id="supervisingOfficer" placeholder="Supervising Officer">
         <input type="date" id="dateReceivedPPO" class="probation-date probation-date-ppo" data-placeholder="Date Received by the PPO" required>
@@ -310,14 +330,14 @@
 const token = localStorage.getItem("token");
 if (!token) {
   alert("You must login first.");
-  window.location.href = "index.html";
+  window.location.href = "login.html";
 }
 
 const API_BASE = "https://doj-backend-inqm.onrender.com";
 
 function logout() {
   localStorage.removeItem("token");
-  window.location.href = "index.html";
+  window.location.href = "login.html";
 }
 
 async function confirmAddRecord() {
@@ -348,7 +368,94 @@ document.addEventListener("click", function(event) {
 function getActiveYear() {
   return document.getElementById("activeYear").value;
 }
+let activeMasterlistType = localStorage.getItem("active_masterlist_type") || "PI";
 
+function setMasterlistType(type) {
+  activeMasterlistType = type;
+  localStorage.setItem("active_masterlist_type", type);
+
+const piBtn = document.getElementById("piBtn");
+const cpiBtn = document.getElementById("cpiBtn");
+const ppiBtn = document.getElementById("ppiBtn");
+const cppiBtn = document.getElementById("cppiBtn");
+
+
+  if (piBtn) piBtn.classList.toggle("active-type", type === "PI");
+if (cpiBtn) cpiBtn.classList.toggle("active-type", type === "CPI");
+if (ppiBtn) ppiBtn.classList.toggle("active-type", type === "PPI");
+if (cppiBtn) cppiBtn.classList.toggle("active-type", type === "CPPI");
+const referralNumber = document.getElementById("referralNumber");
+
+if (referralNumber) {
+  referralNumber.placeholder =
+    type === "CPI" ? "CPI No." :
+    type === "PPI" ? "PPI No." :
+    type === "CPPI" ? "CPPI No." :
+    "PI No.";
+}
+
+  const title = document.querySelector(".masterlist-title");
+  if (title) {
+    title.textContent = type === "CPI"
+      ? "SAN PABLO CITY OFFICE ORDER MASTERLIST"
+      : "SAN PABLO CITY OFFICE ORDER MASTERLIST";
+  }
+const cpiOfficeFrom = document.getElementById("cpiOfficeFrom");
+const cpiServiceRequested = document.getElementById("cpiServiceRequested");
+
+const cppiOfficeFrom = document.getElementById("cppiOfficeFrom");
+const cppiServiceRequested = document.getElementById("cppiServiceRequested");
+
+if (cpiOfficeFrom) cpiOfficeFrom.value = "";
+if (cpiServiceRequested) cpiServiceRequested.value = "";
+
+if (cppiOfficeFrom) cppiOfficeFrom.value = "";
+if (cppiServiceRequested) cppiServiceRequested.value = "";
+
+if (cpiOfficeFrom) {
+  cpiOfficeFrom.style.display = type === "CPI" ? "block" : "none";
+}
+
+if (cpiServiceRequested) {
+  cpiServiceRequested.style.display = type === "CPI" ? "block" : "none";
+}
+
+if (cppiOfficeFrom) {
+  cppiOfficeFrom.style.display = type === "CPPI" ? "block" : "none";
+}
+
+if (cppiServiceRequested) {
+  cppiServiceRequested.style.display = type === "CPPI" ? "block" : "none";
+}
+if (typeof window.syncDocketUI === "function") {
+  window.syncDocketUI();
+}
+  const y = getActiveYear();
+  if (y) renderTableForYear(y).catch(console.error);
+}
+
+function isRecordForActiveType(record) {
+  const referral = String(pick(record, "referral", "referral") || "")
+    .toUpperCase()
+    .trim();
+
+  if (activeMasterlistType === "CPPI") {
+    return referral.startsWith("CPPI");
+  }
+
+  if (activeMasterlistType === "CPI") {
+    return referral.startsWith("CPI") && !referral.startsWith("CPPI");
+  }
+
+  if (activeMasterlistType === "PPI") {
+    return referral.startsWith("PPI");
+  }
+
+  return referral.startsWith("PI") &&
+    !referral.startsWith("CPI") &&
+    !referral.startsWith("PPI") &&
+    !referral.startsWith("CPPI");
+}
 /* =====================================================
    CACHE / HELPERS
    ===================================================== */
@@ -503,7 +610,7 @@ async function renderTableForYear(year) {
   tbody.innerHTML = "";
   recordsCache.clear();
 
-  const records = await loadYearData(year);
+  const records = (await loadYearData(year)).filter(isRecordForActiveType);
 
   for (const r of records) {
     const id = getRecordId(r);
@@ -783,128 +890,58 @@ function clearSearch() {
    ===================================================== */
 (function initReferralCombo() {
   const oldReferralEl = document.getElementById("referral");
-  const typeEl = document.getElementById("referralType");
   const numEl = document.getElementById("referralNumber");
 
-  const cpiWrap = document.getElementById("cpiFields");
-  const requestingOfficeEl = document.getElementById("requestingOffice");
-  const serviceRequestedEl = document.getElementById("serviceRequested");
-  const dateSubmittedEl = document.getElementById("dateSubmitted");
-
-  if (!oldReferralEl || !typeEl || !numEl) return;
+  if (!oldReferralEl || !numEl) return;
 
   oldReferralEl.style.display = "none";
 
   function syncOldReferralValue() {
-    const type = (typeEl.value || "").trim();
     const num = (numEl.value || "").trim();
 
-    let combined = [type, num].filter(Boolean).join(" ").trim();
-
-    if (type === "CPI") {
-      const ro = (requestingOfficeEl?.value || "").trim();
-      const sr = (serviceRequestedEl?.value || "").trim();
-      const ds = (dateSubmittedEl?.value || "").trim();
-
-      const extras = [];
-      if (ro) extras.push(`Requesting Office: ${ro}`);
-      if (sr) extras.push(`Service Requested: ${sr}`);
-      if (ds) extras.push(`Date Submitted: ${ds}`);
-
-      if (extras.length) combined = `${combined} - ${extras.join(" - ")}`.trim();
+    if (!num) {
+      oldReferralEl.value = "";
+      return;
     }
 
-    oldReferralEl.value = combined;
+    oldReferralEl.value = `${activeMasterlistType}-${num}`;
   }
 
-  function toggleCpiFields() {
-    const isCpi = typeEl.value === "CPI";
-    if (cpiWrap) cpiWrap.style.display = isCpi ? "block" : "none";
-
-    if (!isCpi) {
-      if (requestingOfficeEl) requestingOfficeEl.value = "";
-      if (serviceRequestedEl) serviceRequestedEl.selectedIndex = 0;
-      if (dateSubmittedEl) dateSubmittedEl.value = "";
-    }
-    syncOldReferralValue();
-  }
-
-  typeEl.addEventListener("change", toggleCpiFields);
   numEl.addEventListener("input", syncOldReferralValue);
 
-  if (requestingOfficeEl) requestingOfficeEl.addEventListener("input", syncOldReferralValue);
-  if (serviceRequestedEl) serviceRequestedEl.addEventListener("change", syncOldReferralValue);
-  if (dateSubmittedEl) dateSubmittedEl.addEventListener("change", syncOldReferralValue);
-
-  toggleCpiFields();
   syncOldReferralValue();
 })();
-
 /* =====================================================
-   DOCKET COMBO
+   DOCKET AUTO PREFIX
+   PI  = PS
+   CPI = CPS
    ===================================================== */
 (function initDocketCombo() {
   const oldDocketEl = document.getElementById("docketNo");
-  const typeEl = document.getElementById("docketType");
   const numEl = document.getElementById("docketNumber");
 
-  const cpsWrap = document.getElementById("cpsFields");
-  const cpsRequestingOfficeEl = document.getElementById("cpsRequestingOffice");
-  const terminationTypeSelect = document.getElementById("terminationTypeSelect");
-
-  if (!oldDocketEl || !typeEl || !numEl) return;
-
-  oldDocketEl.style.display = "none";
-
-  function ensureOption(selectEl, value, label) {
-    if (!selectEl) return;
-    const exists = [...selectEl.options].some(o => o.value === value);
-    if (!exists) {
-      const opt = document.createElement("option");
-      opt.value = value;
-      opt.textContent = label ?? value;
-      selectEl.appendChild(opt);
-    }
-  }
+  if (!oldDocketEl || !numEl) return;
 
   function syncOldDocketValue() {
-    const type = (typeEl.value || "").trim();
     const num = (numEl.value || "").trim();
-    let combined = [type, num].filter(Boolean).join(" ").trim();
+const prefix =
+  activeMasterlistType === "CPI" ? "CPS" :
+  activeMasterlistType === "PPI" ? "PR" :
+  activeMasterlistType === "CPPI" ? "TPR" :
+  "PS";
 
-    if (type === "CPS") {
-      const ro = (cpsRequestingOfficeEl?.value || "").trim();
-      if (ro) combined = `${combined} - Requesting Office: ${ro}`.trim();
-    }
-
-    oldDocketEl.value = combined;
+    oldDocketEl.value = num ? `${prefix}-${num}` : "";
+numEl.placeholder =
+  activeMasterlistType === "CPI" ? "CPS No." :
+  activeMasterlistType === "PPI" ? "PR No." :
+  activeMasterlistType === "CPPI" ? "TPR No." :
+  "PS No.";
   }
 
-  function toggleCpsFields() {
-    const isCps = typeEl.value === "CPS";
-
-    if (cpsWrap) cpsWrap.style.display = isCps ? "block" : "none";
-    if (!isCps && cpsRequestingOfficeEl) cpsRequestingOfficeEl.value = "";
-
-    if (terminationTypeSelect) {
-      if (isCps) {
-        ensureOption(terminationTypeSelect, "Terminated", "Terminated");
-        terminationTypeSelect.value = "Terminated";
-        terminationTypeSelect.disabled = true;
-      } else {
-        terminationTypeSelect.disabled = false;
-        terminationTypeSelect.selectedIndex = 0;
-      }
-    }
-
-    syncOldDocketValue();
-  }
-
-  typeEl.addEventListener("change", toggleCpsFields);
   numEl.addEventListener("input", syncOldDocketValue);
-  if (cpsRequestingOfficeEl) cpsRequestingOfficeEl.addEventListener("input", syncOldDocketValue);
 
-  toggleCpsFields();
+  window.syncDocketUI = syncOldDocketValue;
+
   syncOldDocketValue();
 })();
 
@@ -1119,6 +1156,11 @@ function clearForm() {
   document.getElementById("dateReceived").value = "";
   document.getElementById("dateOfOrder").value = "";
   document.getElementById("officer").value = "";
+  const cpiOfficeFrom = document.getElementById("cpiOfficeFrom");
+const cpiServiceRequested = document.getElementById("cpiServiceRequested");
+
+if (cpiOfficeFrom) cpiOfficeFrom.value = "";
+if (cpiServiceRequested) cpiServiceRequested.value = "";
 
   document.getElementById("psirType").selectedIndex = 0;
   document.getElementById("psirSelectedDate").value = "";
@@ -1453,6 +1495,7 @@ async function toggleArchiveRecord(id) {
    ===================================================== */
 document.addEventListener("DOMContentLoaded", function() {
   initUnlimitedYearDropdown();
+  setMasterlistType(activeMasterlistType);
 
   const toggle = document.getElementById("showArchivedToggle");
   if (toggle) {
