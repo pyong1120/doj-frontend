@@ -36,27 +36,27 @@ body{
 /* LEFT LOGO */
 .login-logo-left{
     position:absolute;
-    left: -60px;
-    top:0;
-    width:100px;
+    left: 60px;
+    top: -30px;
+    width: 140px;
     height:auto;
 }
 
 /* NEW LOGO */
 .login-logo-new{
     position:absolute;
-    right:-70px;
-    top: -8px;;
-    width:110px;
+    right:-55px;
+    top: -20px;
+    width:140px;
     height:auto;
 }
 
 /* RIGHT LOGO */
 .login-logo-right{
     position:absolute;
-    right:50px;
-    top:0;
-    width:100px;
+    right: 80px;
+    top: -8px;
+    width: 120px;
     height:auto;
 }
 
