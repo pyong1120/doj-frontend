@@ -565,7 +565,10 @@ input[type="date"]::before{
     width: 100%;
     background: #ffffff;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: auto;
+    max-height: 600px;
+    position: relative;
+    scrollbar-gutter: stable;
 }
 
 table {
@@ -1120,23 +1123,25 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 }
 /* ✅ Make Docket No combo EXACTLY like New Referrals Received combo */
 #docketCombo{
-  width: 330px;                 /* same combo width */
+  width: 160px !important;
+  min-width: 160px !important;
+  margin: 0 !important;
+  padding: 0 !important;               /* same combo width */
 }
 
-#docketCombo select,
 #docketCombo input[type="text"]{
-  width: 150px;                 /* same as dropdown width */
-  flex: 0 0 150px;
-  padding: 6px;
-  font-size: 12px;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #ffffff;
-  color: #070707;
-  border: none;
-  outline: none;
-  border-radius: 0;
-  height: 100%;
-  box-sizing: border-box;
+  width: 160px !important;
+  min-width: 160px !important;
+  flex: 0 0 160px !important;
+  padding: 6px !important;
+  font-size: 12px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  background: #ffffff !important;
+  color: #070707 !important;
+  border: 1px solid #800020 !important;
+  outline: none !important;
+  border-radius: 4px !important;
+  box-sizing: border-box !important;
 }
 
 /* Placeholder color same as others */
@@ -1187,4 +1192,436 @@ input[type="date"]::-webkit-calendar-picker-indicator{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+}
+/* =========================================
+   ✅ HEADER LEFT + 50% WIDTH + HORIZONTAL LOGOS
+   (ADD THIS AT THE VERY END OF style.css)
+   ========================================= */
+
+.header{
+    width: 50%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* Remove old absolute positioning behavior */
+.header-top{
+    position: static;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+/* Logos aligned horizontally */
+.header-logos{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Keep original logo size */
+.logo{
+    width: 130px;
+    height: auto;
+}
+
+/* Keep other logos same size */
+.top-logo{
+    width: 140px;
+    height: auto;
+}
+
+/* Header text aligned left */
+.header-text{
+    position: static;
+    transform: none;
+    padding: 0;
+    width: auto;
+    text-align: left;
+}
+/* =========================================
+   FINAL HEADER LAYOUT (LEFT / CENTER / RIGHT)
+   ========================================= */
+
+.header{
+    width: 50%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.header-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* LEFT SIDE (DOJ + BAGONG PILIPINAS) */
+.header-left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* CENTER TEXT */
+.header-text{
+    flex: 1;
+    text-align: center;
+
+    position: static !important;
+    transform: none !important;
+    padding: 0 !important;
+}
+
+/* RIGHT SIDE (PPA LOGO) */
+.header-right{
+    display: flex;
+    align-items: center;
+}
+
+/* REMOVE OLD ABSOLUTE POSITIONS */
+.logo{
+    width: 130px;
+    height: auto;
+    position: static !important;
+}
+
+.top-logo{
+    width: 140px;
+    height: auto;
+    position: static !important;
+}   
+
+/* REMOVE OLD RIGHT FLOATING LOGOS */
+.top-right-logos{
+    display: none !important;
+}
+/* =========================================
+   FINAL HEADER LAYOUT (LEFT - CENTER - RIGHT)
+   ========================================= */
+
+.header{
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   TIGHT HEADER SPACING (FINAL)
+   ========================================= */
+
+.header-row{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px; /* 🔻 reduced from 10–15 */
+}
+
+/* LEFT LOGO */
+.header-left{
+    margin-right: 4px; /* 🔻 tighter */
+}
+
+/* CENTER TEXT */
+.header-text{
+    flex: 1;
+    text-align: center;
+    margin: 0 2px; /* 🔻 very tight */
+}
+
+/* RIGHT LOGOS */
+.header-right{
+    margin-left: 4px; /* 🔻 tighter */
+    gap: 6px; /* space BETWEEN the two right logos */
+}
+.masterlist-type-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: 10px;
+}
+
+/* EXACT SAME STYLE AS SELECT YEAR BOX */
+.year-like-btn {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #800020;
+  border-radius: 6px;
+  background: #FFF9DC;
+  color: #070707;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  min-width: 95px; /* same visual width as Select Year */
+  outline: none;
+}
+
+/* HOVER SAME FAMILY */
+.year-like-btn:hover {
+  background: #FFF9DC;
+  border-color: #800020;
+}
+
+/* ACTIVE = same box, but selected look */
+.active-type {
+  background: #FFF9DC;
+  color: #070707;
+  border: 2px solid #800020;
+}
+/* =========================================
+   FINAL HEADER AND LOGO FIX
+   Add this at the VERY BOTTOM of style.css
+   ========================================= */
+
+.header {
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 55px !important;
+}
+
+.header-row {
+    display: grid !important;
+    grid-template-columns: 160px 1fr 260px !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 20px !important;
+}
+
+.header-left {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+}
+
+.header-text {
+    position: static !important;
+    transform: none !important;
+    width: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: center !important;
+}
+
+.header-right {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 25px !important;
+}
+
+.logo {
+    width: 120px !important;
+    height: auto !important;
+    position: static !important;
+}
+
+.top-logo {
+    width: 95px !important;
+    height: auto !important;
+    position: static !important;
+}
+
+.header h1,
+.header h2 {
+    font-size: 13px !important;
+    margin: 2px 0 !important;
+    line-height: 1.2 !important;
+}
+
+.header h3,
+.header h4 {
+    font-size: 14px !important;
+    margin: 2px 0 !important;
+    line-height: 1.2 !important;
+}
+
+.header h5 {
+    font-size: 15px !important;
+    margin: 3px 0 !important;
+    line-height: 1.2 !important;
+}
+
+.header h6,
+.header-contact {
+    font-size: 12px !important;
+    margin: 2px 0 !important;
+    line-height: 1.2 !important;
+}
+
+.masterlist-title-box {
+    margin-top: 20px !important;
+}
+/* =========================================
+   PI / CPI NO. BOX = SAME SIZE AS PETITIONER'S NAME
+   ========================================= */
+
+#referralCombo {
+    width: 160px !important;
+}
+
+#referralCombo input[type="text"] {
+    width: 160px !important;
+    flex: 0 0 160px !important;
+    box-sizing: border-box !important;
+}
+/* =========================================
+   FIX INVESTIGATION ROW SPACING
+   ========================================= */
+
+/* Make PI/CPI No. same size as normal inputs */
+#referralCombo{
+    width: 160px !important;
+    min-width: 160px !important;
+}
+
+/* Make investigation row auto-fit tightly */
+.investigation-grid{
+    grid-auto-columns: max-content !important;
+    column-gap: 4px !important;
+}
+
+/* Ensure all inputs keep normal width */
+.investigation-grid input,
+.investigation-grid select,
+#referralCombo input[type="text"]{
+    width: 160px !important;
+    box-sizing: border-box !important;
+}
+/* =========================================
+   MAKE ALL HEADER LOGOS SAME SIZE
+   ========================================= */
+
+.logo,
+.top-logo {
+    width: 120px !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
+/* =========================================
+   BAGONG PILIPINAS LOGO SLIGHTLY BIGGER
+   ========================================= */
+
+.top-logo:last-child{
+    width: 140px !important;
+    height: auto !important;
+}
+/* =========================================
+   STICKY HORIZONTAL SCROLLBAR
+   ========================================= */
+
+.table-wrapper{
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    max-height: 600px;
+    position: relative;
+}
+
+/* Sticky scrollbar support */
+.table-wrapper::-webkit-scrollbar{
+    height: 14px;
+}
+
+.table-wrapper::-webkit-scrollbar-track{
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb{
+    background: #C0C0C0; /* silver */
+    border-radius: 10px;
+    border: 2px solid #f1f1f1;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover{
+    background: #A9A9A9; /* darker silver on hover */
+}
+
+/* Keep horizontal scrollbar visible while scrolling */
+.table-wrapper{
+    scrollbar-gutter: stable;
+}
+/* =========================================
+   FINAL FIX PROBATION SPACING
+   PS No. + Classification same spacing as Investigation inputs
+   ========================================= */
+
+.probation-grid{
+    grid-auto-columns: max-content !important;
+    column-gap: 4px !important;
+    gap: 8px !important;
+}
+
+#docketCombo{
+    width: 160px !important;
+    min-width: 160px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#docketNumber{
+    width: 160px !important;
+    min-width: 160px !important;
+    box-sizing: border-box !important;
+    border: 1px solid #800020 !important;
+    border-radius: 4px !important;
+    margin: 0 !important;
+}
+
+#classification{
+    width: 160px !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+}
+#cppiOfficeFrom,
+#cppiServiceRequested {
+  width: 160px;
+  box-sizing: border-box;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left,
+.header-right {
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.logo,
+.top-logo {
+  max-width: 90px;
+  height: auto;
+}
+
+.header-right {
+  gap: 20px;
+}
+
+.header-right .top-logo {
+  max-width: 80px;
+}
+
+.masterlist-type-buttons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.year-like-btn {
+  min-width: 48px;
+  height: 28px;
+  cursor: pointer;
 }
