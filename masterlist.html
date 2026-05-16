@@ -259,7 +259,7 @@
     <table id="dataTable">
       <thead>
       <tr>
-        <th colspan="11" class="group-row">INVESTIGATION</th>
+        <th colspan="13" class="group-row">INVESTIGATION</th>
         <th colspan="4" class="psir-date-row">PSIR DATE SUBMITTED TO COURT</th>
         <th colspan="4" class="probation-row">PROBATION SUPERVISION</th>
         <th colspan="2" class="probation-period-row">PROBATION PERIOD</th>
@@ -281,6 +281,8 @@
         <th>Date Received</th>
         <th>Date of Order</th>
         <th>Investigating Officer</th>
+        <th class="cpi-cppi-col">Office From</th>
+        <th class="cpi-cppi-col">Service Requested</th>
 
         <th>PSIR/Grant</th>
         <th>Denial</th>
@@ -430,6 +432,10 @@ if (cppiServiceRequested) {
 if (typeof window.syncDocketUI === "function") {
   window.syncDocketUI();
 }
+document.body.classList.toggle(
+  "show-cpi-cppi-cols",
+  type === "CPI" || type === "CPPI"
+);
   const y = getActiveYear();
   if (y) renderTableForYear(y).catch(console.error);
 }
@@ -479,7 +485,29 @@ function pick(r, snake, camel) {
   if (!r) return "";
   return r[snake] ?? r[camel] ?? "";
 }
+function getOfficeFrom(record) {
+  if (activeMasterlistType === "CPI") {
+    return pick(record, "cpi_office_from", "cpiOfficeFrom");
+  }
 
+  if (activeMasterlistType === "CPPI") {
+    return pick(record, "cppi_office_from", "cppiOfficeFrom");
+  }
+
+  return "";
+}
+
+function getServiceRequested(record) {
+  if (activeMasterlistType === "CPI") {
+    return pick(record, "cpi_service_requested", "cpiServiceRequested");
+  }
+
+  if (activeMasterlistType === "CPPI") {
+    return pick(record, "cppi_service_requested", "cppiServiceRequested");
+  }
+
+  return "";
+}
 /* =====================================================
    DATE HELPERS
    ===================================================== */
@@ -641,6 +669,8 @@ async function renderTableForYear(year) {
       <td>${escapeHtml(formatDate(pick(r, "date_received", "dateReceived")))}</td>
       <td>${escapeHtml(formatDate(pick(r, "date_of_order", "dateOfOrder")))}</td>
       <td>${escapeHtml(pick(r, "officer", "officer"))}</td>
+      <td class="cpi-cppi-col">${escapeHtml(getOfficeFrom(r))}</td>
+      <td class="cpi-cppi-col">${escapeHtml(getServiceRequested(r))}</td>
 
       <td>${escapeHtml(formatDate(pick(r, "psir_date", "psirDate")))}</td>
       <td>${escapeHtml(formatDate(pick(r, "denial_date", "denialDate")))}</td>
@@ -1057,11 +1087,16 @@ async function addRecord() {
   const finalExtensionFixed = toNoonUTCDate(finalExtension);
   const extensionProbationPeriodFixed = toNoonUTCDate(extensionProbationPeriod);
   const terminationTransferDateFixed = toNoonUTCDate(terminationTransferDate);
+  const cpiOfficeFrom = document.getElementById("cpiOfficeFrom")?.value || "";
+  const cpiServiceRequested = document.getElementById("cpiServiceRequested")?.value || "";
+
+  cppiOfficeFrom = document.getElementById("cppiOfficeFrom")?.value || "";
+  const cppiServiceRequested = document.getElementById("cppiServiceRequested")?.value || "";
 
   const effectiveYear = dateReceived
     ? Number(formatDate(dateReceived).slice(0, 4))
     : Number(activeYear);
-
+    
   const payload = {
     year: effectiveYear,
     referral, petitioner, address, ccno, court, offense, sentence,
@@ -1073,6 +1108,15 @@ async function addRecord() {
     date_of_order: dateOfOrderFixed,
 
     officer,
+    cpiOfficeFrom,
+cpi_office_from: cpiOfficeFrom,
+cpiServiceRequested,
+cpi_service_requested: cpiServiceRequested,
+
+cppiOfficeFrom,
+cppi_office_from: cppiOfficeFrom,
+cppiServiceRequested,
+cppi_service_requested: cppiServiceRequested,
 
     psirDate: psirDateFixed,
     psir_date: psirDateFixed,
@@ -1161,6 +1205,12 @@ const cpiServiceRequested = document.getElementById("cpiServiceRequested");
 
 if (cpiOfficeFrom) cpiOfficeFrom.value = "";
 if (cpiServiceRequested) cpiServiceRequested.value = "";
+
+const cppiOfficeFrom = document.getElementById("cppiOfficeFrom");
+const cppiServiceRequested = document.getElementById("cppiServiceRequested");
+
+if (cppiOfficeFrom) cppiOfficeFrom.value = "";
+if (cppiServiceRequested) cppiServiceRequested.value = "";
 
   document.getElementById("psirType").selectedIndex = 0;
   document.getElementById("psirSelectedDate").value = "";
@@ -1505,12 +1555,16 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  const style = document.createElement("style");
-  style.textContent = `
-    .top-right-logos, .bottom-right-wrapper, .bottom-left-logo { pointer-events:none; }
-    .table-wrapper { position:relative; z-index:5; }
-  `;
-  document.head.appendChild(style);
+const style = document.createElement("style");
+style.textContent = `
+  .top-right-logos, .bottom-right-wrapper, .bottom-left-logo { pointer-events:none; }
+  .table-wrapper { position:relative; z-index:5; }
+
+  body:not(.show-cpi-cppi-cols) .cpi-cppi-col {
+    display: none;
+  }
+`;
+document.head.appendChild(style);
 });
 </script>
 
